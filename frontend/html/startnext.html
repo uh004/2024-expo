@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>게임시작</title>
+
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/start.css">
+
+  <!-- 폰트 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+  <!-- font-family: 'IBM Plex Sans KR', sans-serif; -->
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">환영합니다, <span id="nicknameDisplay"></span>!</h1>
+    <p class="subtitle">즐거운 시간을 보내세요!</p>
+</div>
+
+<script>
+    const nickname = localStorage.getItem('nickname');
+    document.getElementById('nicknameDisplay').innerText = nickname ? nickname : "사용자";
+</script>
+</body>
+</html>

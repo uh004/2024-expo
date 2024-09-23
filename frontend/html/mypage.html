@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>내정보</title>
+
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/main.css">
+
+    <!-- include 목적 jquery -->
+    <!-- https://qna.programmers.co.kr/questions/3774/html%EC%97%90%EC%84%9C-html-%EB%84%A3%EA%B8%B0-include -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#header").load("header.html")
+        });
+
+                // 드롭다운 메뉴 토글 기능
+                function toggleDropdown() {
+                    document.getElementById("profileDropdown").classList.toggle("show");
+                }
+        
+                // 다른 곳 클릭하면 드롭다운 메뉴 닫기
+                window.onclick = function(event) {
+                    if (!event.target.matches('.dropdown-btn')) {
+                        var dropdowns = document.getElementsByClassName("dropdown-content");
+                        for (var i = 0; i < dropdowns.length; i++) {
+                            var openDropdown = dropdowns[i];
+                            if (openDropdown.classList.contains('show')) {
+                                openDropdown.classList.remove('show');
+                            }
+                        }
+                    }
+                }
+            </script>
+
+</head>
+<body>
+  <div class="frame">
+    <nav class="header">
+        <img src="../img/logo.png" alt="로고">
+        <ul>
+            <li><a href="main.html" class="neon-effect">홈</a></li>
+            <li><a href="gamerule.html" class="neon-effect">게임방법</a></li>
+            <li><a href="rank.html" class="neon-effect">랭킹</a></li>
+            <li><a href="comunity.html" class="neon-effect">커뮤니티</a></li>
+            <li><a href="mypage.html" class="neon-effect">내정보</a></li>
+
+        </ul>
+        </nav>
+    <div class="wrap">
+        <!-- 프로필 섹션 -->
+        <section class="profile-section">
+            <div class="profile-header">
+                <div class="profile-picture">
+                    <img src="../img/profile-image.png" alt="프로필 이미지" class="profile-image">
+                </div>
+                <div class="profile-info">
+                    <h2>사용자</h2>
+                    <div class="profile-stats">
+                        <span>챌린지: 27</span>
+                        <span>점수: 9</span>
+                        <span>시간: 123</span>
+                    </div>
+                </div>
+                <div class="profile-settings">
+                    <button class="dropdown-btn" onclick="toggleDropdown()">⚙️</button>
+                    <div id="profileDropdown" class="dropdown-content">
+                        <a href="#">프로필 편집</a>
+                        <a href="#">로그아웃</a>
+                        <a href="#">탈퇴하기</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 콘텐츠 섹션 -->
+        <section id="history" class="content-section" style="display: block;">
+            <h2>내 기록</h2>
+            <div class="content-grid">
+                <div class="content">
+                    <p>콘텐츠 1</p> 
+                </div>
+                <div class="content">
+                    <p>콘텐츠 2</p>
+                </div>
+                <div class="content">
+                    <p>콘텐츠 3</p>
+                </div>
+                <div class="content">
+                    <p>콘텐츠 4</p>
+                </div>
+                <div class="content">
+                    <p>콘텐츠 5</p>
+                </div>
+            </div>
+        </section>
+    </div>
+  </div>
+</body>
+</html

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>새 글 작성</title>
+    <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/main.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <!-- 폰트 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+  <!-- font-family: 'IBM Plex Sans KR', sans-serif; -->
+</head>
+<body>
+  <div class="frame2">
+    <!-- 상단 네비게이션 바 -->
+    <nav class="header">
+      <img src="../img/logo.png" alt="로고">
+      <ul>
+        <li><a href="main.html" class="neon-effect">홈</a></li>
+        <li><a href="gamerule.html" class="neon-effect">게임방법</a></li>
+        <li><a href="rank.html" class="neon-effect">랭킹</a></li>
+        <li><a href="#" class="neon-effect">커뮤니티</a></li>
+        <li><a href="mypage.html" class="neon-effect">내정보</a></li>
+  
+      </ul>
+    </nav>
+
+    <!-- 새 글 작성 폼 -->
+    <div class="container2">
+        <div class="write-post-form">
+            <h2>새 글 작성</h2>
+            <form action="submit_post.php" method="post" enctype="multipart/form-data">
+                <!-- 제목 입력 -->
+                <div class="form-group">
+                    <label for="title">제목:</label>
+                    <input type="text" id="title" name="title" placeholder="제목을 입력하세요" required>
+                </div>
+
+                <!-- 내용 입력 -->
+                <div class="form-group">
+                    <label for="content">내용:</label>
+                    <textarea id="content" name="content" rows="5" placeholder="내용을 입력하세요" required></textarea>
+                </div>
+
+                <!-- 동영상 첨부 -->
+                <div class="form-group">
+                    <label for="video">동영상 첨부:</label>
+                    <input type="file" id="video" name="video" accept="video/*">
+                </div>
+
+                <!-- 사진 첨부 -->
+                <div class="form-group">
+                    <label for="image">사진 첨부:</label>
+                    <input type="file" id="image" name="image" accept="image/*">
+                </div>
+
+                <!-- 제출 버튼 -->
+                <div class="form-group">
+                    <button type="submit">등록하기</button>
+                </div>
+
+                <!-- 뒤로가기 버튼 -->
+                <div class="form-group">
+                  <button type="button" onclick="history.back()">뒤로가기</button>
+              </div>
+            </form>
+        </div>
+    </div>
+  </div>
+</body>
+</html>
