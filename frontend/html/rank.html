@@ -8,51 +8,24 @@
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/main.css">
 
-    <!-- include 목적 jquery -->
-    <!-- https://qna.programmers.co.kr/questions/3774/html%EC%97%90%EC%84%9C-html-%EB%84%A3%EA%B8%B0-include -->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $("#header").load("header.html")
-        });
-    </script>
 </head>
 <body>
     <div class="frame">
+
         <nav class="header">
             <img src="../img/logo.png" alt="로고">
             <ul>
-              <li><a href="main.html" class="neon-effect">홈</a></li>
-              <li><a href="gamerule.html" class="neon-effect">게임방법</a></li>
-              <li><a href="rank.html" class="neon-effect">랭킹</a></li>
-              <li><a href="comunity.html" class="neon-effect">커뮤니티</a></li>
-              <li><a href="mypage.html" class="neon-effect">내정보</a></li>
-      
+            <li><a href="main.html" class="neon-effect">홈</a></li>
+            <li><a href="gamerule.html" class="neon-effect">게임방법</a></li>
+            <li><a href="rank.html" class="neon-effect">랭킹</a></li>
+            <li><a href="comunity.html" class="neon-effect">커뮤니티</a></li>
+            <li><a href="mypage.html" class="neon-effect">내정보</a></li>
             </ul>
-          </nav>
+        </nav>
 
-        <!-- 카테고리 버튼 추가 -->
-        <div class="category-buttons">
-            <button onclick="showRanking('kpop')">Kpop</button>
-            <button onclick="showRanking('challenge')">Shots</button>
-            <button onclick="showRanking('all')">Challenge</button>
-        </div>
 
-        <div class="ranking">
-            <p>Ranking</p>
-            <table>
-            <thead>
-                <tr>
-                <th>Rank</th>
-                <th>Username</th>
-                <th>Score</th>
-                </tr>
-            </thead>
-            <tbody id="ranking-body">
-                <!-- 여기에 JavaScript로 내용이 동적으로 채워집니다 -->
-            </tbody>
-            </table>
-        </div>
+
+    
         
         <div class="footer"></div>
     </div>

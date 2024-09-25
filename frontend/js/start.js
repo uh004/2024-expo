@@ -1,16 +1,12 @@
 document.getElementById('nicknameForm').addEventListener('submit', function(event) {
-  event.preventDefault(); // 폼 제출 기본 동작 막기
-
+  event.preventDefault();
+  
+  // 입력 필드에서 닉네임을 가져오기
   const nickname = document.getElementById('nickname').value;
 
-  if (nickname.trim() === "") {
-      alert("닉네임을 입력해주세요.");
-      return;
-  }
-
-  // 닉네임을 로컬 스토리지에 저장
+  // 닉네임을 localStorage에 저장
   localStorage.setItem('nickname', nickname);
 
-  // 페이지 이동 (다음 페이지로)
-  window.location.href = "startnext.html"; // 다음 페이지 URL
+  // 메인 페이지로 리다이렉트
+  window.location.href = 'main.html'; // 경로는 필요에 따라 조정하세요.
 });
