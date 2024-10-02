@@ -35,6 +35,11 @@ keypoints_sequence2 = []  # 비디오용 키포인트 시퀀스 저장
 first_frame_ready_event = Event()  # 첫 번째 프레임 준비 여부 확인
 stop_event = Event()  # 동영상이 끝나면 웹캠도 종료하기 위한 이벤트
 
+def reset_events():
+    """이벤트를 새로고침마다 초기화."""
+    first_frame_ready_event.clear()
+    stop_event.clear()
+
 # 비디오의 FPS 가져오기
 cap2 = cv2.VideoCapture(video_file)
 if not cap2.isOpened():
@@ -57,7 +62,8 @@ def extract_keypoints(landmarks, indices):
 
 # 웹캠 프레임 생성 및 키포인트 저장
 def generate_webcam_frames():
-    cap1 = cv2.VideoCapture(0)  # 웹캠
+    # 웹캠 초기화
+    cap1 = cv2.VideoCapture(0)
 
     if not cap1.isOpened():
         print("Error: Cannot access webcam.")
@@ -103,6 +109,7 @@ def generate_webcam_frames():
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
+    # 웹캠을 명확히 해제
     cap1.release()
 
 # 비디오 파일 프레임 생성 및 키포인트 저장
@@ -261,14 +268,17 @@ def visualize_similarity():
 # Flask 경로 설정
 @app.route('/')
 def index():
+    reset_events()  # 새로고침 시 이벤트 초기화
     return render_template('index.html', audio_file=audio_file)
 
 @app.route('/webcam_feed')
 def webcam_feed():
+    reset_events()  # 새로고침 시 이벤트 초기화
     return Response(stream_webcam(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/video_feed')
 def video_feed():
+    reset_events()  # 새로고침 시 이벤트 초기화
     return Response(stream_video(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/compare')
