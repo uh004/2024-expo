@@ -1,0 +1,417 @@
+@import 'reset.css'; /* CSS 초기화 세팅 */
+
+@font-face {
+  font-family: 'BagelFatOne-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_JAMO@1.0/BagelFatOne-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Cafe24Ssurround';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Ownglyph_meetme-Rg';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/Ownglyph_meetme-Rg.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* background */
+html,
+body {
+  background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+}
+
+/* choice.html page */
+
+/* frame */
+
+.frame {
+  display: flex;
+  flex-direction: column;
+}
+
+/* navigator */
+
+.navigator {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #f8f9fa;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#logo {
+  width: 60px;
+  height: 60px;
+  margin: 20px 0px 0px 10px; /* 위 오른 아래 왼*/
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
+}
+
+#category {
+  font-family: 'BagelFatOne-Regular';
+  font-weight: 700;
+  font-size: 48px;
+  color: #343a40;
+  margin: auto;
+  margin-top: 40px;
+}
+
+#img-home {
+  width: 50px;
+  height: 50px;
+  margin: 20px 20px 0px 0px; /* 위 오른 아래 왼*/
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
+}
+
+/* main */
+.main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 200px;
+  padding: 0 100px;
+}
+
+.item {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  border-radius: 15px;
+  overflow: hidden; /* 이미지가 카드 밖으로 나가지 않도록 설정 */
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 이미지를 카드에 맞게 조정 */
+}
+
+.item-text {
+  position: absolute;
+  bottom: 20px; /* 카드 아래쪽에서 20px 위로 */
+  left: 20px; /* 카드 왼쪽에서 20px 오른쪽으로 */
+  color: white;
+  font-size: 24px;
+  font-family: 'Cafe24Ssurround';
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* choice.html page */
+
+/* kpop.html */
+
+.kpop-box {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  border: 3px solid transparent; /* 투명한 테두리 */
+  margin-top: 100px;
+  margin-left: 70px;
+  border-radius: 50px;
+  padding: 100px;
+  width: 90%;
+  height: 400px;
+  background-color: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 20px rgba(225, 255, 0, 0.8), /* 네온 효과 */
+              0 0 30px rgba(225, 255, 0, 0.6), 
+              0 0 40px rgba(225, 255, 0, 0.4); /* 더 넓은 범위에 네온 그림자 */
+}
+
+.left-side {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
+
+.kpop-text {
+  font-family: 'BagelFatOne-Regular';
+  font-weight: 600;
+  font-size: 48px;
+  color: #ffffff; /* 흰색 텍스트 */
+  text-shadow: 0 0 20px rgba(225, 255, 0, 0.8);
+}
+
+.text {
+  font-family: 'Cafe24Ssurround';
+  font-weight: 200;
+  font-size: 21px;
+  color: #fefefe; /* 흰색 텍스트 */
+  margin-top: 80px;
+  text-shadow: 0 0 20px rgba(225, 255, 0, 0.8);
+}
+
+.right-side {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+  width: 80%;
+  margin: 0 auto;
+  margin-left: 100px;
+}
+
+.campus-col {
+  flex-basis: 31%;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  position: relative;
+  overflow: hidden;
+  transition: 0.5s;
+  border: 2px solid transparent; /* 테두리 투명 */
+  box-shadow: 0 0 20px rgba(225, 255, 0, 0.8); /* 기본 네온 테두리 */
+}
+
+.campus-col:hover {
+  box-shadow: 0 0 30px rgba(225, 255, 0, 1), /* 네온 강조 */
+              0 0 40px rgba(225, 255, 0, 0.8); /* 더 넓은 호버 네온 효과 */
+}
+
+.type {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.layer {
+  background: transparent;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: 0.5s;
+}
+
+.layer:hover {
+  background: rgba(0, 0, 0, 0.7); /* 호버 시 약간 어두워지는 효과 */
+}
+
+.layer h3 {
+  width: 100%;
+  font-weight: 500;
+  color: #ffffff;
+  font-family: 'Ownglyph_meetme-Rg';
+  font-size: 26px;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(0);
+  position: absolute;
+  text-align: center;
+  opacity: 0;
+  transition: 0.5s;
+  
+}
+
+.layer:hover h3 {
+  bottom: 50%;
+  transform: translateX(-50%) translateY(50%);
+  opacity: 1;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), /* 황금색 네온 효과 */
+              0 0 20px rgba(255, 215, 0, 0.6),
+              0 0 30px rgba(255, 215, 0, 0.4);
+}
+
+/* kpop.html */
+
+/* card1.html */
+
+/* kpop-card1 */
+
+.kpop-card1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 50px 100px 0px 100px;
+  /* border: 3px solid black; */
+  box-shadow: 0 0 20px rgba(138, 43, 226, 0.8), /* 보라색 네온 */
+              0 0 30px rgba(138, 43, 226, 0.6), 
+              0 0 40px rgba(138, 43, 226, 0.4);
+
+  height: 400px;
+  border-radius: 40px;
+}
+
+.video-card {
+  position: relative;
+  width: 200px;
+  height: 300px;
+  margin-top: 50px;
+  box-shadow: 0 0 20px rgba(138, 43, 226, 0.8), /* 보라색 네온 */
+              0 0 30px rgba(138, 43, 226, 0.6), 
+              0 0 40px rgba(138, 43, 226, 0.4);
+
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#my-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+#play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* startButton */
+
+#startButton {
+  font-family: 'Ownglyph_meetme-Rg';
+  font-weight: 200;
+  width: 400px;
+  height: 50px;
+  background-color: black;
+  color: white;
+  border-radius: 30px;
+  border: none;
+  position: absolute;
+  top: 85%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  transition: all 0.3s ease; /* 부드러운 전환 효과 */
+}
+
+#startButton:hover {
+  background-color: #b52cff;
+  transform: translate(-50%, -50%) scale(1.1); /* 호버 시 크기 확대 */
+  box-shadow: 0 0 20px #b52cff; /* 네온 효과 추가 */
+}
+
+#startButton:active {
+  background-color: #00ff00; /* 클릭 시 밝은 색으로 변화 */
+  transform: translate(-50%, -50%) scale(0.95); /* 클릭 시 살짝 작아짐 */
+  box-shadow: 0 0 30px #00ff00; /* 클릭 시 네온 효과 변화 */
+}
+
+/* startButton */
+
+/* button */
+
+/* derank-card1 */
+
+.derank-card1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 1000px;
+  margin-top: 50px;
+}
+
+.detail-card1 {
+  width: 300px;
+  height: 250px;
+  /* border: 3px solid black; */
+  box-shadow: 0 0 20px rgba(138, 43, 226, 0.8), /* 보라색 네온 */
+              0 0 30px rgba(138, 43, 226, 0.6), 
+              0 0 40px rgba(138, 43, 226, 0.4);
+  border-radius: 20px;
+  padding: 20px 60px;
+}
+
+.detail-card1 > h1 {
+  align-self: center;
+  font-size: 36px;
+  -webkit-text-stroke: 1px #680a9f;
+  color: #ffffff;
+  font-weight: 700;
+  font-family: 'BagelFatOne-Regular';
+  margin-top: 10px;
+  text-align: center;
+}
+
+.detail-card1 > p {
+  margin-top: 30px;
+  -webkit-text-stroke: 1px #680a9f;
+  color: #ffffff;
+  font-size: 28px;
+  font-family: 'Cafe24Ssurround';
+}
+
+.rank-card1 {
+  width: 400px;
+  height: 250px;
+  border: 3px solid black;
+
+  border-radius: 20px;
+}
+
+.detail-rank {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.rank {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 300px;
+  height: 50px;
+  padding-left: 20px;
+  border-radius: 10px;
+}
+
+.rank > h1 {
+  font-family: 'Cafe24Ssurround';
+  -webkit-text-stroke: 1px #680a9f;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.rank > p {
+  font-family: 'Cafe24Ssurround';
+  -webkit-text-stroke: 1px #680a9f;
+  color: #ffffff;
+  padding-left: 30px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* derank-card1 */
+
+/* card1.html */
+
+.video-frame {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#video-stream {
+  width: 80%;
+  height: auto;
+  border: 2px solid #ccc;
+}

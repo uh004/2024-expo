@@ -1,0 +1,141 @@
+@import 'reset.css'; /* CSS 초기화 세팅 */
+
+@font-face {
+  font-family: 'BagelFatOne-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_JAMO@1.0/BagelFatOne-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Cafe24Ssurround';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Ownglyph_meetme-Rg';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/Ownglyph_meetme-Rg.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* 전체 배경 스타일 */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'BagelFatOne-Regular';
+  background-image: url('../img/stbg.jpg'); /* 댄스 배경 이미지로 변경 */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: #000; /* 이미지와 조화를 이루는 어두운 배경색 */
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 컨테이너 스타일 */
+.container {
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.7); /* 반투명한 검은색으로 변경 */
+  padding: 40px;
+  border-radius: 15px; /* 더욱 세련된 모서리 처리 */
+  box-shadow: 0 4px 15px rgba(255, 0, 255, 0.5); /* 네온 퍼플 색상의 그림자 */
+  width: 90%;
+  max-width: 400px;
+}
+
+/* 제목 스타일 */
+.title {
+  font-size: 32px;
+  color: #ff00ff; /* 텍스트 내부 색상 */
+  margin-bottom: 20px;
+  font-weight: 400;
+  -webkit-text-stroke: 1px #fff; /* 윤곽선 두께를 줄여 선명함 증가 */
+  text-shadow: 
+              0 0 3px #fff,   
+              0 0 7px #ff00ff, 
+              0 0 15px #ff00ff,
+              0 0 25px #ff00ff,  
+              0 0 35px #ff00ff,
+              0 0 45px #ff00ff, 
+              0 0 55px #ff00ff;
+  line-height: 1.5;
+
+}
+
+.title2 {
+  font-size: 32px;
+  color: #ff00ff; /* 동일한 내부 색상 */
+  font-weight: 400;
+  text-shadow: 
+              0 0 3px #fff,   
+              0 0 7px #ff00ff, 
+              0 0 15px #ff00ff,
+              0 0 25px #ff00ff,  
+              0 0 35px #ff00ff,
+              0 0 45px #ff00ff, 
+              0 0 55px #ff00ff;
+}
+
+
+
+
+
+/* 서브 타이틀 스타일 */
+.subtitle {
+  font-family: 'Ownglyph_meetme-Rg';
+  font-size: 24px;
+  color: #ff00ff; /* 네온 시안 색상으로 변경 */
+  margin-bottom: 30px;
+  -webkit-text-stroke: 1px #fff;
+  text-shadow: 
+              0 0 5px #fff,  /* 밝은 시안 글로우 */
+              0 0 10px #ff00ff, 
+              0 0 20px #ff00ff, 
+              0 0 30px #ff00ff;  /* 시안 색상 네온 효과 */
+}
+
+
+/* 입력 필드 스타일 */
+.input-field {
+  width: 100%;
+  padding: 12px;
+  font-size: 18px;
+  border: 2px solid #ff00ff; /* 네온 퍼플로 변경 */
+  border-radius: 8px; /* 둥근 모서리 */
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  outline: none;
+  background-color: #222; /* 어두운 회색으로 변경 */
+  color: white; /* 입력 텍스트 색상을 흰색으로 변경 */
+}
+
+/* 입력 필드에 포커스 시 스타일 */
+.input-field:focus {
+  border-color: #00ffff; /* 시안으로 변경 */
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.8); /* 시안 색상의 그림자 효과 */
+}
+
+/* 버튼 스타일 */
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 18px;
+  background-color: #ff00ff; /* 네온 퍼플로 변경 */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* 버튼 호버 스타일 */
+.submit-btn:hover {
+  background-color: #00ffff; /* 시안으로 변화 */
+  box-shadow: 0 4px 15px rgba(0, 255, 255, 0.5);
+}

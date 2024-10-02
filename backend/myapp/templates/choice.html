@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>게임선택</title>
+
+  <!-- Django의 static 태그를 사용해 경로 수정 -->
+  {% load static %}
+
+  <!-- CSS 경로 수정 -->
+  <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  <!-- 폰트 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="frame">
+    <nav class="navigator">
+      <!-- 이미지 경로 수정 -->
+      <a href="{% url 'main' %}"><img src="{% static 'img/logo.png' %}" alt="로고" id="logo"></a>
+      <h2 id="category">카테고리</h2>
+      <a href="{% url 'choice' %}"><img src="{% static 'img/home.png' %}" id="img-home"></a>
+    </nav>
+
+    <div class="main">
+      <a href="{% url 'kpop' %}" class="item type1">
+        <img src="{% static 'img/kpop2.png' %}" alt="Kpop">
+        <div class="item-text">Kpop</div>
+      </a>
+      <a href="{% url 'shots' %}" class="item type2">
+        <img src="{% static 'img/kpop1.png' %}" alt="Shots">
+        <div class="item-text">Shots</div>
+      </a>
+      <a href="{% url 'challenge' %}" class="item type3">
+        <img src="{% static 'img/kpop3.png' %}" alt="Challenge">
+        <div class="item-text">Challenge</div>
+      </a>
+    </div>
+
+    <footer class="footer"></footer>
+  </div>
+</body>
+</html>

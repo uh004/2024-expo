@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webcam and Video Stream</title>
+    <style>
+        .video-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .video-container img {
+            width: 49%;
+            height: auto;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .comparison-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .audio-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+        function startVideoAndAudio() {
+            // 동영상 스트림 시작
+            document.getElementById('video-stream').src = "http://127.0.0.1:5000/video_feed";
+            // 오디오 재생 시작
+            document.getElementById('audio-control').play();
+            // 동영상이 시작되면 로딩 이미지를 숨기기
+            document.getElementById('video-stream').onload = function() {
+                document.getElementById('loading-image').style.display = 'none';
+            };
+        }
+    </script>
+</head>
+<body>
+
+    <div class="audio-container">
+        <h2>배경 음악 재생</h2>
+        <audio id="audio-control" controls>
+            <source src="http://127.0.0.1:5000/static/audio/kpop1.mp3" type="audio/mpeg">
+            브라우저에서 오디오 재생을 지원하지 않습니다.
+        </audio>
+    </div>
+
+    <div class="video-container">
+        <!-- 비디오 파일 스트림 표시 (로딩 상태에서는 대체 이미지 표시) -->
+        <img id="video-stream" src="/static/img/loading.jpg" alt="Loading..." style="background-color: gray;">
+        <!-- 웹캠 스트림 표시 -->
+        <img id="webcam-stream" src="http://127.0.0.1:5000/webcam_feed" alt="Webcam Stream">
+    </div>
+
+    <div class="comparison-container">
+        <h2>포즈 유사도 비교 결과:</h2>
+        <!-- 동영상 시작 버튼 -->
+        <button onclick="startVideoAndAudio()">동영상 및 오디오 시작</button>
+        <!-- 유사도 비교 버튼 -->
+        <button onclick="window.location.href='http://127.0.0.1:5000/graph'">유사도 비교 실행</button>
+    </div>
+
+</body>
+</html>

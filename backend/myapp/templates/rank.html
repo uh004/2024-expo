@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>랭크</title>
+
+    <!-- Django의 static 태그를 사용해 경로 수정 -->
+    {% load static %}
+
+    <!-- CSS 파일 경로 수정 -->
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+</head>
+<body>
+    <div class="frame">
+
+        <nav class="header">
+            <!-- 이미지 경로 수정 -->
+            <img src="{% static 'img/logo.png' %}" alt="로고">
+            <ul>
+                <!-- URL 경로 수정 -->
+                <li><a href="{% url 'main' %}" class="neon-effect">홈</a></li>
+                <li><a href="{% url 'gamerule' %}" class="neon-effect">게임방법</a></li>
+                <li><a href="{% url 'rank' %}" class="neon-effect">랭킹</a></li>
+                <li><a href="{% url 'comunity' %}" class="neon-effect">커뮤니티</a></li>
+                <li><a href="{% url 'mypage' %}" class="neon-effect">내정보</a></li>
+            </ul>
+        </nav>
+
+        <div class="footer"></div>
+    </div>
+
+    <!-- JS 파일 경로 수정 -->
+    <script src="{% static 'js/rank.js' %}"></script>
+</body>
+</html>

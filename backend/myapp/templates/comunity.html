@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>커뮤니티</title>
+
+  <!-- Django의 static 태그 사용 -->
+  {% load static %}
+
+  <!-- CSS 경로 수정 -->
+  <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+  <!-- 외부 폰트 및 아이콘 로드 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <!-- 폰트 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+  <!-- font-family: 'IBM Plex Sans KR', sans-serif; -->
+
+  <!-- JS 경로 수정 -->
+    <script src="{% static 'js/comunity.js' %}"></script>
+
+    <script>
+    var writeUrl = "{% url 'write' %}";
+    // 게시물 상세 보기 함수
+    function showPostDetail(postId) {
+        document.getElementById("board-list").style.display = "none";
+        document.getElementById("post-detail").style.display = "block";
+        document.getElementById("new-post-section").style.display = "none";
+
+        const posts = {
+            "1": { title: "첫 번째 게시물 제목", content: "집 가고 싶은데 어떻게 해야 함?." },
+            "2": { title: "두 번째 게시물 제목", content: "이건 두 번째 게시물의 내용입니다." }
+        };
+
+        const post = posts[postId];
+        document.getElementById("detail-title").innerText = post.title;
+        document.getElementById("detail-content").innerText = post.content;
+    }
+
+    let likeCount = 0;
+    function increaseLike() {
+        likeCount++;
+        document.getElementById("like-count").innerText = likeCount;
+    }
+
+    let commentCount = 0;
+    // 댓글 등록 버튼 클릭 시
+    function submitComment() {
+        const commentInput = document.getElementById("comment-input");
+        const commentText = commentInput.value.trim();
+
+        if (commentText) {
+            const commentList = document.getElementById("comment-list");
+            const newComment = document.createElement("div");
+            newComment.classList.add("comment");
+            newComment.innerText = commentText;
+
+            commentList.appendChild(newComment);
+
+            commentCount++;
+            document.getElementById("comment-count").innerText = commentCount;
+            commentInput.value = ""; // 입력창 초기화
+        }
+    }
+
+  // 목록으로 돌아가기
+  function backToList() {
+      // 게시물 리스트 보여주기
+      document.getElementById("board-list").style.display = "block";
+      // 게시물 상세보기 숨기기
+      document.getElementById("post-detail").style.display = "none";
+      // 새 글 작성 버튼 다시 보여주기
+      var newPostSection = document.getElementById("new-post-section");
+      newPostSection.style.display = "flex"; // 원래 flex로 설정되어 있으므로 유지
+      newPostSection.style.width = "65%";    // 기본 너비 유지
+  }
+</script>
+</head>
+<body>
+  <div class="frame2">
+    <!-- 상단 네비게이션 바 -->
+    <nav class="header">
+      <!-- 이미지 경로 수정 -->
+      <img src="{% static 'img/logo.png' %}" alt="로고">
+      <ul>
+        <!-- URL 경로 수정 -->
+        <li><a href="{% url 'main' %}" class="neon-effect">홈</a></li>
+        <li><a href="{% url 'gamerule' %}" class="neon-effect">게임방법</a></li>
+        <li><a href="{% url 'rank' %}" class="neon-effect">랭킹</a></li>
+        <li><a href="{% url 'comunity' %}" class="neon-effect">커뮤니티</a></li>
+        <li><a href="{% url 'mypage' %}" class="neon-effect">내정보</a></li>
+      </ul>
+    </nav>
+
+    <!-- 검색 바 -->
+    <div class="search-bar">
+        <input type="text" placeholder="검색어를 입력하세요">
+        <button>검색</button>
+    </div>
+
+    <div class="container">
+        <!-- 메인 콘텐츠 (자유게시판) -->
+        <div class="main-content">
+            <h2 class="board-title">자유게시판</h2>
+
+            <!-- 게시물 리스트 -->
+            <div id="board-list" class="post-list">
+                <div class="post-item">
+                    <div class="post-title">
+                        <a href="#" onclick="showPostDetail('1')">첫 번째 게시물 제목</a>
+                    </div>
+                    <div class="post-info">작성자: 이건호 | 작성일: 2024.09.09</div>
+                </div>
+                <div class="post-item">
+                    <div class="post-title">
+                        <a href="#" onclick="showPostDetail('2')">두 번째 게시물 제목</a>
+                    </div>
+                    <div class="post-info">작성자: 배수한 | 작성일: 2024.09.08</div>
+                </div>
+            </div>
+
+            <!-- 게시물 상세 보기 (숨김 처리된 상태로 시작) -->
+            <div id="post-detail" style="display: none;">
+                <div class="post-container">
+                    <div class="post-header">
+                        <h2 id="detail-title"></h2>
+                    </div>
+                    <div class="post-content">
+                        <p id="detail-content"></p>
+                        <!-- 이미지가 있을 경우 보여줄 부분 -->
+                        <div id="post-image" class="post-media">
+                            <img src="{% static 'img/post-image.jpeg' %}" alt="게시물 이미지" class="responsive-image">
+                        </div>
+                        <!-- 동영상이 있을 경우 보여줄 부분 -->
+                        <div class="video-container">
+                            <div class="video-frame">
+                                <video controls class="video-content">
+                                    <source src="{% static 'video/르세라핌easy.mp4' %}" type="video/mp4">
+                                    브라우저가 동영상을 지원하지 않습니다.
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-actions">
+                        <button class="like-btn" onclick="increaseLike()">👍 좋아요</button> 
+                        <span id="like-count">0</span> · 💬 댓글 <span id="comment-count">0</span>
+                    </div>
+                </div>
+
+                <!-- 댓글 입력 -->
+                <div class="comment-section">
+                    <textarea id="comment-input" placeholder="댓글을 입력하세요"></textarea>
+                    <button onclick="submitComment()">댓글 등록</button>
+                </div>
+
+                <!-- 댓글 리스트 -->
+                <div id="comment-list"></div>
+
+                <!-- 목록으로 돌아가기 버튼 -->
+                <button onclick="backToList()">목록으로 돌아가기</button>
+            </div>
+        </div>
+
+        <!-- 우측 사이드바 (조회 많은 글, HOT 게시물, BEST 게시물) -->
+        <div class="right-sidebar">
+            <div class="popular-posts">
+                <h3>실시간 인기 글</h3>
+                <div class="popular-post">
+                    <div class="post-title">인기 게시물 1</div>
+                    <div class="post-stats">좋아요: 10 | 댓글: 5</div>
+                </div>
+                <div class="popular-post">
+                    <div class="post-title">인기 게시물 2</div>
+                    <div class="post-stats">좋아요: 8 | 댓글: 3</div>
+                </div>
+            </div>
+
+            <div class="popular-posts">
+                <h3>HOT 게시물</h3>
+                <div class="popular-post">
+                    <div class="post-title">HOT 게시물 1</div>
+                    <div class="post-stats">좋아요: 13 | 댓글: 6</div>
+                </div>
+            </div>
+
+            <div class="popular-posts">
+                <h3>BEST 게시물</h3>
+                <div class="popular-post">
+                    <div class="post-title">BEST 게시물 1</div>
+                    <div class="post-stats">좋아요: 25 | 댓글: 10</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 새 글 작성 버튼 -->
+    <div class="new-post" id="new-post-section">
+        <input type="text" placeholder="새 글을 작성해 주세요!" disabled />
+        <button class="new-post-btn" onclick="window.location.href=writeUrl;">
+            <i class="fa-solid fa-pencil" style="color: #63E6BE;"></i>
+        </button>
+    </div>
+
+    <div class="footer-space"></div>
+
+</div>
+</body>
+</html>

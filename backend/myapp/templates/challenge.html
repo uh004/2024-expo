@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KPOP 화면</title>
+
+  <!-- Django의 static 태그를 사용해 경로 수정 -->
+  {% load static %}
+
+  <!-- CSS 경로 수정 -->
+  <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  <!-- 폰트 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="frame">
+    <nav class="navigator">
+      <!-- 이미지 경로 수정 -->
+      <img src="{% static 'img/logo.png' %}" alt="로고" id="logo">
+      <h2 id="category">CHALLENGE</h2>
+      <!-- 홈 버튼 경로 수정 -->
+      <a href="{% url 'choice' %}"><img src="{% static 'img/home.png' %}" id="img-home"></a>
+    </nav>
+
+    <div class="kpop-box">
+      <div class="left-side">
+        <h1 class="kpop-text">인기있는 CHALLENGE</h1>
+        <p class="text">최근 가장 인기 있는 댄스를 추천해요</p>
+      </div>
+      <div class="right-side">
+        <div class="campus-col">
+          <!-- 이미지 및 URL 경로 수정 -->
+          <img src="{% static 'img/challengecardimg1.jpg' %}" class="type">
+          <div class="layer">
+            <a href="{% url 'challengecard1' %}"><h3>Toca Toca</h3></a>
+          </div>
+        </div>
+
+        <div class="campus-col">
+          <a href="{% url 'challengecard2' %}"><img src="{% static 'img/challengecardimg2.jpg' %}" class="type"></a>
+          <div class="layer">
+            <a href="{% url 'challengecard2' %}"><h3>idol</h3></a>
+          </div>
+        </div>
+
+        <div class="campus-col">
+          <a href="{% url 'challengecard3' %}"><img src="{% static 'img/challengecardimg3.jpg' %}" class="type"></a>
+          <div class="layer">
+            <a href="{% url 'challengecard3' %}"><h3>pokemon</h3></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer"></footer>
+  </div>
+</body>
+</html>

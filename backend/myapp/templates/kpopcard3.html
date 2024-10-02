@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>kpopcard3</title>
+
+  <!-- Django의 static 태그를 사용해 경로 수정 -->
+  {% load static %}
+
+  <!-- CSS 경로 수정 -->
+  <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  <!-- 폰트 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="frame">
+    <nav class="navigator">
+      <!-- 이미지 경로 수정 -->
+      <img src="{% static 'img/logo.png' %}" alt="로고" id="logo">
+      <h2 id="category">Kpop</h2>
+      <!-- 페이지 경로 수정 -->
+      <a href="{% url 'kpop' %}"><img src="{% static 'img/home.png' %}" id="img-home"></a>
+    </nav>
+
+    <button id="startButton">챌린지 시작하기</button>
+
+    <div class="kpop-card1">
+      <div class="video-card">
+        <button id="play-button">Play Video</button>
+        <!-- 비디오 경로 수정 -->
+        <video id="my-video" controls>
+            <source src="{% static 'video/kpop3.mp4' %}" type="video/mp4">
+        </video>
+      </div>
+
+      <div class="derank-card1">
+        <div class="detail-card1">
+          <h1>DETAIL</h1>
+          <hr>
+          <p>초고속으로 마음을 울리는 강렬한 비트와 폭발적 멜로디로, 멈출 수 없는 열정과 꿈을 향해 질주하세요.</p>
+        </div>
+
+        <div class="detail-card1">
+          <h1>RANK</h1>
+          <hr>
+          <div class="detail-rank">
+            <div class="rank">
+              <h1>배수한님</h1>
+              <p>97점으로 현재 1등입니다.</p>
+            </div>
+            <div class="rank">
+              <h1>이건호님</h1>
+              <p>95점으로 현재 2등입니다.</p>
+            </div>
+            <div class="rank">
+              <h1>권민정님</h1>
+              <p>93점으로 현재 3등입니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer"></footer>
+  </div>
+
+  <script>
+    document.getElementById('play-button').addEventListener('click', function() {
+      var video = document.getElementById('my-video');
+      if (video.paused) {
+          video.play(); // Play the video
+          this.textContent = 'Pause Video'; // Change button text
+      } else {
+          video.pause(); // Pause the video
+          this.textContent = 'Play Video'; // Change button text
+      }
+    });
+
+    document.getElementById('startButton').addEventListener('click', function() {
+        window.location.href = "{% url 'kpopcard1_start' %}";  // 페이지 경로 수정
+    });
+  </script>
+</body>
+</html>

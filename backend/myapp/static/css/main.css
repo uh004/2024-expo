@@ -1,0 +1,859 @@
+@import 'reset.css'; /* CSS 초기화 세팅 */
+
+@font-face {
+  font-family: 'BagelFatOne-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_JAMO@1.0/BagelFatOne-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Cafe24Ssurround';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Ownglyph_meetme-Rg';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/Ownglyph_meetme-Rg.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  background-image: url('../img/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+/* main.html */
+
+/* frame */
+
+.frame {
+  display: flex;
+  flex-direction: column;
+}
+
+.frame2{
+  background-color: #f4f4f4;
+  height: 150vh;
+}
+
+/* header */
+
+.header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.header img{
+  width: 80px;
+  height: 80px;
+  padding-top: 8px;
+}
+
+.header ul{
+  display: flex;
+  flex-direction: row;
+}
+
+.header ul li{
+  list-style: none;
+  display: inline-block;
+  padding: 20px 20px;
+  position: relative;
+}
+
+.header ul li a{
+  color: black;
+  text-decoration: none;
+  font-family: 'BagelFatOne-Regular';
+  font-size: 20px;
+}
+
+.header ul li:nth-child(5) {
+  margin-right: 100px;
+}
+
+.header ul li a:hover {
+  background-position: right center;
+}
+
+.header ul li::after {
+  content: '';
+  width: 0;
+  height: 3px;
+  background: black;
+  display: block;
+  margin: auto;
+  transition: width 0.4s ease-in-out, transform 0.4s ease-in-out;
+}
+
+.header ul li:hover::after {
+  width: 100%;
+  transform: translateY(5px); /* 밑줄이 아래로 이동하는 효과 */
+}
+
+.neon-effect {
+  text-shadow:
+    0 0 5px rgba(255, 255, 255, 0.8),
+    0 0 10px rgba(255, 255, 255, 0.7),
+    0 0 15px rgba(255, 255, 255, 0.6),
+    0 0 20px rgba(0, 255, 255, 0.5),
+    0 0 30px rgba(0, 255, 255, 0.4),
+    0 0 40px rgba(0, 255, 255, 0.3),
+    0 0 50px rgba(0, 255, 255, 0.2);
+}
+
+
+/* main */
+
+.main {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.main img {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  margin: 0 60px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.main img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+}
+
+
+.start-game-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 320px; /* 약간 더 넓게 설정 */
+  margin: 250px auto 0 auto; /* 상단 여백과 가운데 정렬을 위해 마진 설정 */
+  font-size: 26px; /* 폰트 크기 약간 증가 */
+  padding: 20px 100px; /* 버튼 크기와 내부 패딩 조정 */
+  background-color: #ff4757; /* 버튼 배경 색상 설정 */
+  color: white;
+  border: none; /* 테두리 제거 */
+  border-radius: 50px; /* 더 둥근 모서리 */
+  cursor: pointer;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* 그림자 추가 */
+  transition: all 0.4s ease; /* 부드러운 전환 효과 */
+  position: relative;
+  top: -10px;
+}
+
+.start-game-btn:hover {
+  background-color: #ff6b81; /* 호버 시 배경색 변경 */
+  transform: translateY(-5px); /* 호버 시 버튼이 약간 올라가는 효과 */
+  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.4); /* 호버 시 그림자 강화 */
+  transition: all 0.4s ease; /* 부드러운 전환 */
+}
+
+.start-game-btn:active {
+  transform: translateY(-2px); /* 클릭 시 버튼이 약간 내려가는 효과 */
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3); /* 클릭 시 그림자 조정 */
+}
+
+/* gamerule.html */
+.row{
+  margin-top: 5%;
+  display: flex;
+  flex-direction: row;
+  gap: 30px; /* 요소들 사이에 30px 간격을 줌 */
+  justify-content: space-between;
+}
+
+.facilities{
+  width: 80%;
+  margin: auto;
+  text-align: center;
+  padding-top: 80px;
+}
+.facilities h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 60px;
+  font-family: 'Cafe24Ssurround'; /* 세련된 폰트 사용 */
+  color: #FFD700; /* 황금색 사용 */
+  text-align: center;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), /* 황금색 네온 효과 */
+              0 0 20px rgba(255, 215, 0, 0.6),
+              0 0 30px rgba(255, 215, 0, 0.4);
+  margin: auto; /* 위아래 자동 마진을 통해 센터링 */
+  padding: 40px 20px; /* 상하 패딩 값을 증가시켜 균형있는 느낌 */
+  background-color: rgba(0, 0, 0, 0.7); /* 배경색 반투명 검정 */
+  border-radius: 20px; /* 둥근 모서리 */
+  border: 1px solid rgba(255, 255, 255, 0.5); /* 황금색 테두리 */
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); /* 박스 그림자 효과 */
+  
+}
+
+.facilities h3{
+  font-size: 36px;
+  font-family: 'Cafe24Ssurround';
+  color: black;
+}
+
+.facilities-col img{
+  width: 100%;
+  height: 80%;
+  border-radius: 10px;
+}
+
+.facilities-col p {
+  color: #ffffff; /* 밝은 흰색으로 변경하여 배경의 어두운 부분에 대비 */
+  font-family: 'Ownglyph_meetme-Rg';
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), /* 황금색 네온 효과 */
+              0 0 20px rgba(255, 215, 0, 0.6),
+              0 0 30px rgba(255, 215, 0, 0.4);
+  font-size: 24px;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.facilities-col h3 {
+  color: #FFD700; /* 황금색으로 변경하여 무대 조명과 조화 */
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), /* 황금색 네온 효과 */
+              0 0 20px rgba(255, 215, 0, 0.6),
+              0 0 30px rgba(255, 215, 0, 0.4);
+  margin-top: 16px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-family: 'Cafe24Ssurround';
+}
+
+.facilities-col {
+  background-color: rgba(0, 0, 0, 0.5); /* 반투명 검은색 배경으로 변경 */
+  border: 1px solid rgba(255, 255, 255, 0.5); /* 흰색 테두리 추가 */
+  border-radius: 10px;
+  padding: 20px 20px 200px 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 호버 효과도 더 강조 */
+.facilities-col:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 25px rgba(255, 215, 0, 0.5); /* 황금색 그림자로 변경 */
+}
+
+
+
+/* rank.html */
+
+
+
+
+/* rank.html */
+
+/* mypage.html */
+
+
+
+/* mypage.html */
+
+
+/* banner */
+
+.banner{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  background-size: cover;
+}
+
+.game-start-container {
+  position: relative;
+  cursor: pointer; /* Indicates the image is clickable */
+  display: inline-block; /* Keeps the div tightly around the content */
+  margin-top: 100px;
+}
+
+#start-game-img {
+  position: absolute;
+  width: 150px;
+  height: auto;
+  transition: transform 0.3s ease;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* animation: bobbing 3s infinite alternate ease-in-out; */
+  
+}
+
+#start-game-text {
+  position: absolute;
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Align center */
+  color: #fff;
+  font-size: 24px;
+  text-align: center;
+  visibility: hidden; /* Hidden by default */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.game-start-container:hover #start-game-img {
+  transform: translate(120%, -30%) scale(1.1); /* Move right and scale on hover */
+}
+
+.game-start-container:hover #start-game-text {
+  visibility: visible;
+  opacity: 1; /* Shows the text on hover */
+}
+
+/* Animation keyframes for bobbing effect */
+@keyframes bobbing {
+  0%, 100% {
+    transform: translate(-50%, -50%) translateY(0); /* Starting position */
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(-20px); /* Move up */
+  }
+}
+
+
+/* 제목 스타일링 */
+.banner h1 {
+  font-family: 'IBM Plex Sans KR', sans-serif;
+  font-size: 84px;
+  font-weight: 400;
+  color: #fff; /* 텍스트 색상을 흰색으로 변경 */
+  text-align: center;
+  margin-bottom: 20px;
+  letter-spacing: 5px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* 텍스트 그림자 */
+  animation: fadeIn 2s ease-in-out; /* 부드러운 페이드 인 애니메이션 */
+}
+
+/* 부드러운 페이드 인 애니메이션 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* 강조된 텍스트 네온 효과 */
+.highlight {
+  color: #fff; /* 텍스트 색상 */
+  -webkit-text-stroke: 2px #fff; /* 흰색 외곽선 */
+  position: relative;
+  display: inline-block;
+  font-family: 'Cafe24Ssurround';
+  text-shadow: 
+              0 0 15px #FFD700,  /* 더 강한 황금색 네온 효과 */
+              0 0 30px #FFD700, 
+              0 0 45px #FFD700, 
+              0 0 60px #FFD700; /* 더 멀리 퍼지는 빛 */
+}
+
+/* 각 텍스트에 맞는 더 강한 네온 효과 색상 적용 */
+.type1 {
+  text-shadow: 
+              0 0 15px #FFD700, 
+              0 0 30px #FFD700, 
+              0 0 45px #FFD700, 
+              0 0 60px #FFD700; /* 더 강한 황금색 네온 */
+}
+
+.type2 {
+  text-shadow: 
+              0 0 15px #00BFFF, 
+              0 0 30px #00BFFF, 
+              0 0 45px #00BFFF, 
+              0 0 60px #00BFFF; /* 더 강한 하늘색 네온 */
+}
+
+.type3 {
+  text-shadow: 
+              0 0 15px #FF4500, 
+              0 0 30px #FF4500, 
+              0 0 45px #FF4500, 
+              0 0 60px #FF4500; /* 더 강한 오렌지색 네온 */
+}
+
+
+
+/* 설명 텍스트 스타일링 */
+.banner p {
+  font-family: 'Ownglyph_meetme-Rg';
+  font-size: 32px;
+  color: #fff; /* 흰색 텍스트 */
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 50px;
+  line-height: 1.5;
+  -webkit-text-stroke: 1px #fa7122; 
+  max-width: 800px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), /* 네온 효과 추가 */
+              0 0 20px rgba(255, 255, 255, 0.6), 
+              0 0 30px rgba(255, 255, 255, 0.4);
+  animation: fadeInUp 2s ease-in-out; /* 아래에서 위로 올라오는 페이드 인 효과 */
+}
+
+/* 아래에서 위로 올라오는 애니메이션 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px); /* 약간 아래에서 시작 */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0); /* 원래 위치로 */
+  }
+}
+
+
+
+.start{
+  display: inline-block; /* 버튼처럼 보이게 하기 */
+  padding: 10px 20px;
+  background-color: #4CAF50; /* 버튼 배경색 */
+  color: white;
+  text-decoration: none; /* 밑줄 제거 */
+  border-radius: 5px; /* 둥근 모서리 */
+}
+
+.start:hover{
+  color: red;
+  font-size: 36px;
+  transition: 0.7s;
+}
+
+/* 챌린지 참여하기 버튼 스타일 */
+.btn2 {
+  font-size: 36px;
+  padding: 15px 100px;
+  margin: 10px 4px;
+  color: white; /* 텍스트 색상을 흰색으로 유지 */
+  font-family: 'Ownglyph_meetme-Rg';
+  text-transform: uppercase;
+  text-align: center;
+  position: relative;
+  text-decoration: none;
+  display: inline-block;
+  background-color: #7897FB; /* 초기 배경 색상 */
+  border: 2px solid transparent; /* 테두리 없애기 */
+  border-radius: 30px; /* 둥근 버튼 */
+  transition: all 0.4s ease; /* 부드러운 전환 효과 */
+  box-shadow: 0 8px 15px rgba(96, 152, 255, 0.3); /* 버튼 그림자 */
+  
+  /* 네온사인 효과 */
+  text-shadow: 
+              0 0 10px rgba(255, 255, 255, 0.8), /* 흰색 네온 빛 */
+              0 0 20px rgba(255, 255, 255, 0.6),
+              0 0 30px rgba(255, 255, 255, 0.8);
+  -webkit-text-stroke: 2px #f491ff;
+  ; /* 핑크색 윤곽선 */
+  margin-top: 100px;
+}
+
+.btn2:hover {
+  background-color: #FFC0CB; /* 마우스 오버 시 배경 색상을 밝은 핑크로 변경 */
+  color: #fff; /* 텍스트 색상을 흰색으로 유지 */
+  transform: translateY(-5px) scale(1.05); /* 살짝 위로 이동 및 확대 */
+  box-shadow: 0 15px 30px rgba(255, 192, 203, 0.6); /* 밝은 핑크색 그림자 */
+  text-shadow: 0 0 12px rgba(255, 192, 203, 0.7), 0 0 30px rgba(255, 192, 203, 0.6); /* 더 강한 네온 효과 */
+}
+
+.btn2:active {
+  background-color: #FF1493; /* 클릭 시 배경 색상을 진한 핑크로 변경 */
+  transform: translateY(-2px) scale(0.98); /* 클릭 시 약간 축소 */
+  box-shadow: 0 8px 20px rgba(255, 20, 147, 0.5); /* 진한 핑크색 그림자 */
+  text-shadow: 0 0 10px rgba(255, 20, 147, 0.7), 0 0 25px rgba(255, 20, 147, 0.6); /* 진한 핑크 네온 */
+}
+
+.btn2::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 300%;
+  background: rgba(255, 192, 203, 0.1);
+  transition: all 0.6s ease-in-out;
+  transform: translate(-50%, -50%) scale(0.1);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.btn2:hover::before {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* comunity */
+
+/* 상단 네비게이션 바 */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #fff;
+  border-bottom: 2px solid #ccc;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 로고 스타일 */
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: black;
+  text-decoration: none;
+}
+
+/* 네비게이션 링크 */
+.nav-right {
+  display: flex;
+}
+
+.nav-link {
+  font-size: 16px;
+  color: #666;
+  text-decoration: none;
+  margin-left: 20px;
+}
+
+/* 검색 바 */
+.search-bar {
+  display: flex;
+  justify-content: center;
+  padding: 8px;
+  background-color: #eaeaea;
+}
+
+.search-bar input {
+  width: 300px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+  height: 20px;
+  margin-top: 20px;
+}
+
+.search-bar button {
+  padding: 10px 20px;
+  background-color: #74787c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+/* 전체 레이아웃 */
+.container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 20px auto;
+  min-height: 80vh;
+}
+
+/* 자유게시판 */
+.main-content {
+  width: 65%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 자유게시판 타이틀 */
+.board-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  border-left: 5px solid black;
+  padding-left: 10px;
+}
+
+/* 게시물 리스트 */
+.post-list {
+  margin-top: 20px;
+}
+
+.post-item {
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+.post-title a {
+  text-decoration: none;
+  font-size: 18px;
+  color: #086dd8;
+}
+
+.post-title a:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+/* 게시물 작성 정보 */
+.post-info {
+  font-size: 14px;
+  color: #888;
+}
+
+/* 우측 사이드바 */
+.right-sidebar {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+.popular-posts {
+  background-color: #f4f4f4;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.popular-post {
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+/* 새 글 작성 */
+.new-post {
+  width: 52%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  /* margin: 20px auto; */
+  margin-left: 160px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  
+}
+
+.new-post input {
+  border: none;
+  background: none;
+  width: 100%;
+  font-size: 16px;
+  color: #888;
+  outline: none;
+}
+
+.new-post-btn {
+  font-size: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+}
+
+/* 게시물 상세 페이지 */
+.post-container {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+/* 제목과 내용 영역 스타일 */
+.post-header {
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+}
+
+.post-content {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* 좋아요와 댓글 카운트 */
+.post-actions {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #666;
+}
+
+.like-btn {
+  background-color: #090808;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.like-btn:hover {
+  background-color: #eee;
+}
+
+/* 댓글 섹션 스타일 */
+.comment-section {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.comment-section textarea {
+  width: 70%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.comment-section button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.comment-section button:hover {
+  background-color: #0056b3;
+}
+
+/* 댓글 리스트 */
+#comment-list {
+  margin-top: 20px;
+}
+
+.comment {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+  color: #333;
+}
+
+.comment:last-child {
+  border-bottom: none;
+}
+
+/* 목록으로 돌아가기 버튼 */
+button {
+  padding: 10px 15px;
+  background-color: #6207c4;
+  color: rgb(249, 248, 248);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* 하단 영역 추가 */
+.footer-space {
+  height: 200px; /* 하단에 200px 높이 추가 */
+}
+
+/* comunity */
+
+/* write */
+
+/* 작성 폼 컨테이너 */
+.container2 {
+  max-width: 800px;
+  margin: 50px auto;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* 폼 제목 스타일 */
+.write-post-form h2 {
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* 폼 요소 그룹 */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+/* 입력 필드 스타일 */
+.form-group input[type="text"],
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.form-group input[type="file"] {
+  font-size: 16px;
+}
+
+/* 버튼 스타일 */
+button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+button[type="button"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 0px;
+  transition: background-color 0.3s ease;
+}
+
+button[type="button"]:hover {
+  background-color: #0056b3;
+}
