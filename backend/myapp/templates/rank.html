@@ -29,7 +29,31 @@
             </ul>
         </nav>
 
-        <!-- 코드 추가 -->
+        <!-- 카테고리 선택 버튼 -->
+        <div class="category-buttons">
+            <button onclick="showRanking('kpop')">K-pop Shots</button>
+            <button onclick="showRanking('challenge')">Challenge</button>
+            <button onclick="showRanking('all')">All-Time Best</button>
+        </div>
+
+        <!-- 랭킹 테이블 -->
+        <div class="ranking-container">
+            <h1>Leaderboard</h1>
+            <table id="leaderboard">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Player</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody id="ranking-body" 
+                    data-goldmedal="{% static 'img/goldmedal.png' %}" 
+                    data-silvermedal="{% static 'img/silvermedal.png' %}" 
+                    data-bronzemedal="{% static 'img/bronzemedal.png' %}">
+                </tbody>
+            </table>
+        </div>
 
         <div class="footer"></div>
     </div>

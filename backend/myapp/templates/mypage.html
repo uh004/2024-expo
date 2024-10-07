@@ -28,9 +28,49 @@
             </ul>
         </nav>
 
-        <!-- 코드추가 -->
-
-        <div class="footer"></div>
+    <!-- 내정보 섹션 시작 -->
+    <div class="mypage-container">
+        <div class="profile-section">
+            <!-- 이미지에 클릭 이벤트 추가 -->
+            <img src="{% static 'img/hachuping.png' %}" alt="Player Avatar" class="avatar" onclick="logout()">
+            <div class="player-info">
+                <h1>플레이어 이름: <span id="playerName">하츄핑</span></h1> <!-- 여기에 닉네임이 표시됨 -->
+                <p>레벨: <span id="playerLevel">1</span></p>
+            </div>
+        </div>
+    
+        <div class="stats-section">
+            <h2>플레이어 통계</h2>
+            <div class="stat">총 플레이 시간: <span id="playTime">0분</span></div>
+            <div class="stat">최고 점수: <span id="highScore">0점</span></div>
+            <div class="stat">랭킹: <span id="ranking">상위 ??%</span></div>
+        </div>
+    
+        <div class="playlist-section">
+            <h2>즐겨찾는 곡</h2>
+            <ul id="favoriteSongs">
+                <li>나는 아픈건 딱 질색이니까</li>
+                <li>모기송</li>
+                <li>Supersonic</li>
+            </ul>
+        </div>
     </div>
+
+    <div class="footer"></div>
+
+    <!-- JavaScript 파일 경로 수정 -->
+    <script src="{% static 'js/mypage.js' %}"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // localStorage에서 저장된 닉네임 불러오기
+        const nickname = localStorage.getItem('nickname');
+
+        // 플레이어 이름 영역에 닉네임 표시
+        if (nickname) {
+          document.getElementById('playerName').textContent = nickname; // 하츄핑 대신 닉네임 표시
+        }
+      });
+    </script>
 </body>
 </html>

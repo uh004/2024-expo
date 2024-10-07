@@ -17,7 +17,6 @@ urlpatterns = [
     path('kpopcard1/', views.kpopcard1, name='kpopcard1'), # K-pop 카드 1
     path('kpopcard2/', views.kpopcard2, name='kpopcard2'), # K-pop 카드 2
     path('kpopcard3/', views.kpopcard3, name='kpopcard3'), # K-pop 카드 3
-    # path('kpopcard1_start/', views.kpopcard1_start, name='kpopcard1_start'),
     path('shots/', views.shots, name='shots'),             # Shots 페이지
     path('shotscard1/', views.shotscard1, name='shotscard1'), # Shots 카드 1
     path('shotscard2/', views.shotscard2, name='shotscard2'), # Shots 카드 2

@@ -3,6 +3,7 @@ import cv2
 import mediapipe as mp
 import numpy as np
 from threading import Event
+from concurrent.futures import ThreadPoolExecutor
 from fastdtw import fastdtw
 from scipy.spatial.distance import euclidean
 import matplotlib.pyplot as plt
@@ -20,8 +21,8 @@ mp_pose_video = mp.solutions.pose   # 비디오 파일용 MediaPipe 포즈 추�
 mp_drawing = mp.solutions.drawing_utils  # 포즈 랜드마크 그리기 도구
 
 # 비디오 파일 경로 및 오디오 파일 경로 설정
-video_file = 'static/video/kpop1.mp4'
-audio_file = 'static/audio/kpop1.mp3'
+video_file = 'static/video/shots4.mp4'
+audio_file = 'static/audio/shots4.mp3'
 
 # 프레임 크기를 동일하게 설정
 frame_width = 640
@@ -35,10 +36,13 @@ keypoints_sequence2 = []  # 비디오용 키포인트 시퀀스 저장
 first_frame_ready_event = Event()  # 첫 번째 프레임 준비 여부 확인
 stop_event = Event()  # 동영상이 끝나면 웹캠도 종료하기 위한 이벤트
 
+# 새로고침마다 이벤트와 키포인트 리스트를 초기화
 def reset_events():
-    """이벤트를 새로고침마다 초기화."""
+    """이벤트와 키포인트 리스트를 새로고침마다 초기화."""
     first_frame_ready_event.clear()
     stop_event.clear()
+    keypoints_sequence1.clear()  # 웹캠 키포인트 초기화
+    keypoints_sequence2.clear()  # 비디오 키포인트 초기화
 
 # 비디오의 FPS 가져오기
 cap2 = cv2.VideoCapture(video_file)
@@ -147,7 +151,7 @@ def generate_video_frames():
 
             # 포즈 관절 그리기
             if results2.pose_landmarks:
-                mp_drawing.draw_landmarks(frame2, results2.pose_landmarks, mp_pose_video.POSE_CONNECTIONS)
+                # mp_drawing.draw_landmarks(frame2, results2.pose_landmarks, mp_pose_video.POSE_CONNECTIONS)
 
                 keypoints = extract_keypoints(results2.pose_landmarks.landmark, range(33))
                 keypoints_sequence2.append(l2_normalize(keypoints))  # 비디오 키포인트 저장
@@ -273,17 +277,32 @@ def index():
 
 @app.route('/webcam_feed')
 def webcam_feed():
-    reset_events()  # 새로고침 시 이벤트 초기화
+    reset_events()  # 새로고침 시 이벤트 및 스트림 초기화
     return Response(stream_webcam(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/video_feed')
 def video_feed():
-    reset_events()  # 새로고침 시 이벤트 초기화
+    reset_events()  # 새로고침 시 이벤트 및 스트림 초기화
     return Response(stream_video(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/compare')
 def compare():
     return "Similarity comparison complete. Go to /graph to see the results."
+
+# 캐시 비우기 설정
+@app.after_request
+def add_header(response):
+    # 캐시를 비워 새로고침 시 최신 데이터 제공
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '-1'
+    return response
+
+# 멀티스레딩을 사용해 웹캠과 비디오를 동시에 처리
+def start_streams():
+    with ThreadPoolExecutor() as executor:
+        executor.submit(stream_webcam)
+        executor.submit(stream_video)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
