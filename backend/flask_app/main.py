@@ -21,8 +21,8 @@ mp_pose_video = mp.solutions.pose   # 비디오 파일용 MediaPipe 포즈 추�
 mp_drawing = mp.solutions.drawing_utils  # 포즈 랜드마크 그리기 도구
 
 # 비디오 파일 경로 및 오디오 파일 경로 설정
-video_file = 'static/video/shots4.mp4'
-audio_file = 'static/audio/shots4.mp3'
+video_file = 'static/video/kpop1.mp4'
+audio_file = 'static/audio/kpop1.mp3'
 
 # 프레임 크기를 동일하게 설정
 frame_width = 640
@@ -46,6 +46,7 @@ def reset_events():
 
 # 비디오의 FPS 가져오기
 cap2 = cv2.VideoCapture(video_file)
+cap2.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 if not cap2.isOpened():
     print("Error: Cannot open video file.")
 else:
@@ -87,7 +88,7 @@ def generate_webcam_frames():
                 first_frame = frame1
                 first_frame_ready_event.set()  # 첫 번째 프레임이 준비되었음을 알림
                 first_frame_ready_event.wait()  # 비디오 첫 프레임 준비를 대기
-            
+
             # 프레임 좌우 반전 (1은 좌우반전 의미)
             frame1 = cv2.flip(frame1, 1)
             
@@ -106,6 +107,7 @@ def generate_webcam_frames():
 
                 keypoints = extract_keypoints(results1.pose_landmarks.landmark, range(33))
                 keypoints_sequence1.append(l2_normalize(keypoints))  # 웹캠 키포인트 저장
+                # print(f"Webcam keypoints collected: {len(keypoints_sequence1)} frames")  # 로그 추가
 
             ret, buffer = cv2.imencode('.jpg', frame1)
             frame = buffer.tobytes()
@@ -116,29 +118,37 @@ def generate_webcam_frames():
     # 웹캠을 명확히 해제
     cap1.release()
 
-# 비디오 파일 프레임 생성 및 키포인트 저장
+
+import concurrent.futures
+
+def process_frame_async(frame, pose):
+    frame.flags.writeable = False
+    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    results = pose.process(frame_rgb)
+    frame.flags.writeable = True
+    return results
+
+import time
+
 def generate_video_frames():
-    cap2 = cv2.VideoCapture(video_file)  # 비디오 파일
+    cap2 = cv2.VideoCapture(video_file)
 
     if not cap2.isOpened():
         print("Error: Cannot open video file.")
         return
 
+    fps = cap2.get(cv2.CAP_PROP_FPS)  # FPS 가져오기
+    delay = 1 / fps  # FPS에 따른 지연 시간
     first_frame = None
 
     with mp_pose_video.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose2:
         while cap2.isOpened():
-            ret2, frame2 = cap2.read()
+            start_time = time.time()  # 프레임 처리 시작 시간 기록
 
+            ret2, frame2 = cap2.read()
             if not ret2:
                 stop_event.set()  # 비디오가 끝나면 stop_event 설정
                 break
-
-            # 첫 번째 프레임을 저장하고 준비가 되었음을 알림
-            if first_frame is None:
-                first_frame = frame2
-                first_frame_ready_event.set()  # 첫 번째 프레임이 준비되었음을 알림
-                first_frame_ready_event.wait()  # 웹캠 첫 프레임 준비를 대기
 
             # 프레임 크기 조정
             frame2 = cv2.resize(frame2, (frame_width, frame_height))
@@ -151,16 +161,27 @@ def generate_video_frames():
 
             # 포즈 관절 그리기
             if results2.pose_landmarks:
-                # mp_drawing.draw_landmarks(frame2, results2.pose_landmarks, mp_pose_video.POSE_CONNECTIONS)
-
                 keypoints = extract_keypoints(results2.pose_landmarks.landmark, range(33))
-                keypoints_sequence2.append(l2_normalize(keypoints))  # 비디오 키포인트 저장
+                keypoints_sequence2.append(l2_normalize(keypoints))
+
+            # 남은 시간을 프레임에 표시
+            current_frame = int(cap2.get(cv2.CAP_PROP_POS_FRAMES))
+            elapsed_time = current_frame / fps
+            remaining_time = max(0, (cap2.get(cv2.CAP_PROP_FRAME_COUNT) / fps) - elapsed_time)
+            cv2.putText(frame2, f'Time Left: {int(remaining_time)}s', (10, 40), 
+                        cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
 
             ret, buffer = cv2.imencode('.jpg', frame2)
             frame = buffer.tobytes()
 
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+
+            # 프레임 처리가 너무 빠를 경우, 일정 시간 대기하여 FPS를 맞춤
+            end_time = time.time()
+            processing_time = end_time - start_time
+            if processing_time < delay:
+                time.sleep(delay - processing_time)
 
     cap2.release()
 
@@ -300,7 +321,7 @@ def add_header(response):
 
 # 멀티스레딩을 사용해 웹캠과 비디오를 동시에 처리
 def start_streams():
-    with ThreadPoolExecutor() as executor:
+    with ThreadPoolExecutor(max_workers=2) as executor:
         executor.submit(stream_webcam)
         executor.submit(stream_video)
 

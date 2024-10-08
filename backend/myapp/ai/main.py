@@ -18,8 +18,8 @@ mp_pose2 = mp.solutions.pose  # 두 번째 포즈 추정 모델
 
 # 웹캠 디바이스 번호 및 비디오 파일 경로 설정
 cam_file = 0  # 웹캠의 디바이스 번호 (0번은 기본 카메라)
-video_file = 'video/shots1.mp4'  # 비교할 비디오 파일 경로
-audio_file = 'audio/shots1.mp3'  # 재생할 오디오 파일 경로
+video_file = 'video/kpop1.mp4'  # 비교할 비디오 파일 경로
+audio_file = 'audio/kpop1.mp3'  # 재생할 오디오 파일 경로
 
 # 두 개의 캡처 객체 생성
 cap1 = cv2.VideoCapture(cam_file)  # 웹캠 캡처 객체
