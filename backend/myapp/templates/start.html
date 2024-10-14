@@ -19,26 +19,24 @@
   <div class="container">
     <h1 class="title">K-pop 댄스 플랫폼에 <br><span class="title2">오신 걸 환영합니다!</span></h1>
     <p class="subtitle">닉네임을 생성 해주세요</p>
-    <form id="nicknameForm" class="form">
-        <input type="text" id="nickname" class="input-field" placeholder="닉네임을 입력하세요" required />
-        <button type="submit" class="submit-btn">입장하기</button>
+
+    <!-- 폼: 닉네임 제출 -->
+    <form id="nicknameForm" class="form" method="POST" action="{% url 'save_nickname' %}">
+      {% csrf_token %}
+      <input type="text" id="nickname" class="input-field" name="nickname" placeholder="닉네임을 입력하세요" required />
+      
+      <!-- 성별 선택 버튼 -->
+      <div class="gender-selection">
+        <input type="radio" id="male" name="gender" value="M" required checked>
+        <label for="male">남자</label>
+        
+        <input type="radio" id="female" name="gender" value="F" required>
+        <label for="female">여자</label>
+      </div>
+      
+      <button type="submit" class="submit-btn">입장하기</button>
     </form>
   </div>
 
-<!-- JS 파일을 정적 파일로 참조 -->
-<script>
-  document.getElementById('nicknameForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    
-    // 입력 필드에서 닉네임을 가져오기
-    const nickname = document.getElementById('nickname').value;
-
-    // 닉네임을 localStorage에 저장
-    localStorage.setItem('nickname', nickname);
-
-    // 메인 페이지로 리다이렉트
-    window.location.href = "{% url 'mypage' %}";  // mypage로 이동
-  });
-</script>
 </body>
 </html>

@@ -121,7 +121,7 @@ STATIC_URL = "/static/"
 
 # 모든 정적 파일을 모아두는 경로 (정적 파일을 모아 놓는 한 위치)
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "myapp", "static"),
 ]
 
 # 미디어 파일을 관리할 경로

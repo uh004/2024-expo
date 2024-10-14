@@ -130,6 +130,7 @@ body {
   color: white;
   border: none;
   border-radius: 8px;
+  margin-bottom: 15px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -137,5 +138,32 @@ body {
 /* 버튼 호버 스타일 */
 .submit-btn:hover {
   background-color: #00ffff; /* 시안으로 변화 */
-  box-shadow: 0 4px 15px rgba(0, 255, 255, 0.5);
+  box-shadow: 0 8px 30px rgba(0, 255, 255, 0.7); /* 그림자 크기 증가 */
+  transform: scale(1.05); /* 살짝 커지는 효과 */
 }
+
+/* 성별 선택 섹션 */
+.gender-selection {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px; /* 아래 여백 증가 */
+}
+
+.gender-selection input[type="radio"] {
+  margin-right: 10px;
+}
+
+.gender-selection label {
+  font-size: 50px; /* 라벨 크기 증가 */
+  color: #ff00ff;
+  margin-right: 30px; /* 더 넓은 간격 */
+  cursor: pointer;
+  text-shadow: 0 0 8px #fff, 0 0 15px #ff00ff; /* 네온 효과 확대 */
+}
+
+/* 선택된 라벨 강조 스타일 */
+.gender-selection input[type="radio"]:checked + label {
+  text-shadow: 0 0 12px #00ffff, 0 0 20px #00ffff; /* 강조 효과 확대 */
+}
+
+

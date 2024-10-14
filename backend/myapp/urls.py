@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from .import views
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -9,9 +9,12 @@ urlpatterns = [
     path('gamerule/', views.gamerule, name='gamerule'),    # 게임방법
     path('rank/', views.rank, name='rank'),                # 랭킹 페이지
     path('comunity/', views.comunity, name='comunity'),    # 커뮤니티 페이지
+    path('comunity/post/<int:post_id>/', views.get_post_detail, name='get_post_detail'),
     path('write/', views.write, name='write'),             # 글 작성 페이지
     path('submit_post/', views.submit_post, name='submit_post'),  # 새 글 등록 경로
+    path('save_nickname/', views.save_nickname, name='save_nickname'),
     path('mypage/', views.mypage, name='mypage'),          # 마이페이지
+    path('submit_comment/<int:post_id>/', views.submit_comment, name='submit_comment'),  # 댓글 추가 경로
     path('choice/', views.choice, name='choice'),          # 선택 페이지
     path('kpop/', views.kpop, name='kpop'),                # K-pop 페이지
     path('kpopcard1/', views.kpopcard1, name='kpopcard1'), # K-pop 카드 1

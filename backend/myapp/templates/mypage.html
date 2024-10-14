@@ -34,7 +34,7 @@
             <!-- 이미지에 클릭 이벤트 추가 -->
             <img src="{% static 'img/hachuping.png' %}" alt="Player Avatar" class="avatar" onclick="logout()">
             <div class="player-info">
-                <h1>플레이어 이름: <span id="playerName">하츄핑</span></h1> <!-- 여기에 닉네임이 표시됨 -->
+                <h1>플레이어 이름: <span id="playerName">{{ nickname }}</span></h1> <!-- 여기에 닉네임이 표시됨 -->
                 <p>레벨: <span id="playerLevel">1</span></p>
             </div>
         </div>
@@ -62,15 +62,16 @@
     <script src="{% static 'js/mypage.js' %}"></script>
 
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // localStorage에서 저장된 닉네임 불러오기
-        const nickname = localStorage.getItem('nickname');
-
-        // 플레이어 이름 영역에 닉네임 표시
-        if (nickname) {
-          document.getElementById('playerName').textContent = nickname; // 하츄핑 대신 닉네임 표시
-        }
-      });
-    </script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // localStorage에서 닉네임 대신 세션을 사용
+            const nicknameFromServer = "{{ nickname }}";  // 서버에서 받은 닉네임
+            
+            if (nicknameFromServer) {
+                document.getElementById('playerName').textContent = nicknameFromServer;
+            } else {
+                document.getElementById('playerName').textContent = "하츄핑";  // 기본값
+            }
+        });
+    </script>  
 </body>
 </html>

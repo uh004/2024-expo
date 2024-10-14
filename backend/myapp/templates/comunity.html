@@ -19,74 +19,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
-  <!-- font-family: 'IBM Plex Sans KR', sans-serif; -->
-
-  <!-- JS 경로 수정 -->
-    <script src="{% static 'js/comunity.js' %}"></script>
-
-    <script>
-    var writeUrl = "{% url 'write' %}";
-    // 게시물 상세 보기 함수
-    function showPostDetail(postId) {
-        document.getElementById("board-list").style.display = "none";
-        document.getElementById("post-detail").style.display = "block";
-        document.getElementById("new-post-section").style.display = "none";
-
-        const posts = {
-            "1": { title: "첫 번째 게시물 제목", content: "집 가고 싶은데 어떻게 해야 함?." },
-            "2": { title: "두 번째 게시물 제목", content: "이건 두 번째 게시물의 내용입니다." }
-        };
-
-        const post = posts[postId];
-        document.getElementById("detail-title").innerText = post.title;
-        document.getElementById("detail-content").innerText = post.content;
-    }
-
-    let likeCount = 0;
-    function increaseLike() {
-        likeCount++;
-        document.getElementById("like-count").innerText = likeCount;
-    }
-
-    let commentCount = 0;
-    // 댓글 등록 버튼 클릭 시
-    function submitComment() {
-        const commentInput = document.getElementById("comment-input");
-        const commentText = commentInput.value.trim();
-
-        if (commentText) {
-            const commentList = document.getElementById("comment-list");
-            const newComment = document.createElement("div");
-            newComment.classList.add("comment");
-            newComment.innerText = commentText;
-
-            commentList.appendChild(newComment);
-
-            commentCount++;
-            document.getElementById("comment-count").innerText = commentCount;
-            commentInput.value = ""; // 입력창 초기화
-        }
-    }
-
-  // 목록으로 돌아가기
-  function backToList() {
-      // 게시물 리스트 보여주기
-      document.getElementById("board-list").style.display = "block";
-      // 게시물 상세보기 숨기기
-      document.getElementById("post-detail").style.display = "none";
-      // 새 글 작성 버튼 다시 보여주기
-      var newPostSection = document.getElementById("new-post-section");
-      newPostSection.style.display = "flex"; // 원래 flex로 설정되어 있으므로 유지
-      newPostSection.style.width = "65%";    // 기본 너비 유지
-  }
-</script>
 </head>
 <body>
   <div class="frame2">
     <!-- 상단 네비게이션 바 -->
     <nav class="header">
-      <!-- 이미지 경로 수정 -->
-      <img src="{% static 'img/logo.png' %}" alt="로고">
+        <a href="{% url 'main' %}">
+            <!-- 이미지 경로 수정 -->
+            <img src="{% static 'img/logo.png' %}" alt="로고">
+        </a>
       <ul>
         <!-- URL 경로 수정 -->
         <li><a href="{% url 'main' %}" class="neon-effect">홈</a></li>
@@ -110,41 +51,50 @@
 
             <!-- 게시물 리스트 -->
             <div id="board-list" class="post-list">
-                <div class="post-item">
-                    <div class="post-title">
-                        <a href="#" onclick="showPostDetail('1')">첫 번째 게시물 제목</a>
-                    </div>
-                    <div class="post-info">작성자: 이건호 | 작성일: 2024.09.09</div>
+              {% for post in posts %}
+              <div class="post-item">
+                <div class="post-title">
+                  <a href="#" onclick="showPostDetail({{ post.id }})">{{ post.title }}</a>
                 </div>
-                <div class="post-item">
-                    <div class="post-title">
-                        <a href="#" onclick="showPostDetail('2')">두 번째 게시물 제목</a>
-                    </div>
-                    <div class="post-info">작성자: 배수한 | 작성일: 2024.09.08</div>
-                </div>
+                <div class="post-info">
+                    작성자: {{ post.author.nickname}}
+                    작성일: {{ post.created_at|date:"Y-m-d" }}</div>
+              </div>
+              {% endfor %}
             </div>
 
             <!-- 게시물 상세 보기 (숨김 처리된 상태로 시작) -->
             <div id="post-detail" style="display: none;">
                 <div class="post-container">
                     <div class="post-header">
-                        <h2 id="detail-title"></h2>
+                        <h2 id="detail-title" data-post-id="{{post.id}}">{{ post.title}}</h2>
+                        <p id="detail-author"></p>
                     </div>
                     <div class="post-content">
                         <p id="detail-content"></p>
-                        <!-- 이미지가 있을 경우 보여줄 부분 -->
-                        <div id="post-image" class="post-media">
-                            <img src="{% static 'img/post-image.jpeg' %}" alt="게시물 이미지" class="responsive-image">
-                        </div>
-                        <!-- 동영상이 있을 경우 보여줄 부분 -->
-                        <div class="video-container">
-                            <div class="video-frame">
-                                <video controls class="video-content">
-                                    <source src="{% static 'video/르세라핌easy.mp4' %}" type="video/mp4">
-                                    브라우저가 동영상을 지원하지 않습니다.
-                                </video>
+                        <p id="detail-author"></p>
+
+                        <!-- 비디오 카드 -->
+                        {% if post.video %}
+                            <div class="video-card" id="video-container">
+                                <div class="video-frame">
+                                    <video controls class="video-content" id="post-video">
+                                        <source src="{{ post.video.url }}" type="video/mp4">
+                                        브라우저가 동영상을 지원하지 않습니다.
+                                    </video>
+                                </div>
                             </div>
-                        </div>
+                        {% else %}
+                        <!-- 비디오가 없는 경우 스타일 유지 -->
+                            <div class="video-card" id="video-container" style="display:none;">
+                                <div class="video-frame">
+                                    <video controls class="video-content" id="post-video">
+                                        <source id="video-source" type="video/mp4">
+                                        브라우저가 동영상을 지원하지 않습니다.
+                                    </video>
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
                     <div class="post-actions">
                         <button class="like-btn" onclick="increaseLike()">👍 좋아요</button> 
@@ -154,13 +104,24 @@
 
                 <!-- 댓글 입력 -->
                 <div class="comment-section">
-                    <textarea id="comment-input" placeholder="댓글을 입력하세요"></textarea>
-                    <button onclick="submitComment()">댓글 등록</button>
+                    <form id="comment-form" method="post">
+                        {% csrf_token %}
+                        <textarea id="comment-input" placeholder="댓글을 입력하세요"></textarea>
+                        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                        <button onclick="submitComment()">댓글 등록</button>
+                    </form>
                 </div>
 
                 <!-- 댓글 리스트 -->
-                <div id="comment-list"></div>
-
+                <div id="comment-list">
+                    {% for comment in comments %}
+                        <div class="comment">
+                            <p><strong>{{ comment.author.nickname }}</strong>: {{ comment.content }}</p>
+                            <span class="comment-date">{{ comment.created_at|date:"Y-m-d H:i" }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+                    
                 <!-- 목록으로 돌아가기 버튼 -->
                 <button onclick="backToList()">목록으로 돌아가기</button>
             </div>
@@ -201,13 +162,156 @@
     <!-- 새 글 작성 버튼 -->
     <div class="new-post" id="new-post-section">
         <input type="text" placeholder="새 글을 작성해 주세요!" disabled />
-        <button class="new-post-btn" onclick="window.location.href=writeUrl;">
-            <i class="fa-solid fa-pencil" style="color: #63E6BE;"></i>
+        <button class="new-post-btn" onclick="window.location.href={% url 'write' %};">
+            <i class="fa-solid fa-pencil" style="color: #63E6BE;"></i> 새 글 작성
         </button>
     </div>
 
     <div class="footer-space"></div>
+    </div>
 
-</div>
+<script>
+
+    window.onload = function() {
+        // 게시글 목록을 서버에서 받아서 렌더링
+        fetch('/comunity/')
+        .then(response => response.json())
+        .then(posts => {
+            const postListContainer = document.getElementById('board-list');
+
+            // 서버에서 받은 게시물 리스트 출력
+            posts.forEach((post, index) => {
+                const postItem = `
+                    <div class="post-item">
+                        <div class="post-title">
+                            <a href="#" onclick="showPostDetail(${post.id})">${post.title}</a>
+                        </div>
+                        <div class="post-info">작성일: ${post.created_at}</div>
+                    </div>
+                `;
+                postListContainer.innerHTML += postItem;
+            });
+        });
+        
+    };
+    
+    function showPostDetail(postId) {
+        // 서버에서 특정 게시물 가져오기
+        fetch(`/comunity/post/${postId}/`)
+        .then(response => response.json())
+        .then(post => {
+            // 제목과 내용 표시
+            document.getElementById("detail-title").innerText = post.title;
+            document.getElementById("detail-content").innerText = post.content;
+            document.getElementById("detail-author").innerText = "작성자: " + post.author;
+        
+            // 동영상이 있는 경우 표시
+            if (post.video_url) {
+                const videoElement = document.getElementById("post-video");
+                document.getElementById("video-container").style.display = "block";
+                videoElement.src = post.video_url;
+            } else {
+                document.getElementById("video-container").style.display = "none";
+            }
+
+             // 댓글 표시
+            const commentList = document.getElementById("comment-list");
+            commentList.innerHTML = "";  // 기존 댓글 목록 초기화
+            post.comments.forEach(comment => {
+                const commentItem = document.createElement("div");
+                commentItem.classList.add("comment");
+                commentItem.innerText = `${comment.author}: ${comment.content}`;
+                commentList.appendChild(commentItem);
+            });
+        
+            // 게시물 리스트 숨기기
+            document.getElementById("board-list").style.display = "none";
+            // 상세보기 섹션 보이기
+            document.getElementById("post-detail").style.display = "block";
+            // 새 글 작성 버튼 숨기기
+            document.getElementById("new-post-section").style.display = "none";
+        });
+    }
+
+    function backToList() {
+        document.getElementById("board-list").style.display = "block";
+        document.getElementById("post-detail").style.display = "none";
+        document.getElementById("new-post-section").style.display = "flex";
+    }
+
+    let likeCount = 0;
+    function increaseLike() {
+        likeCount++;
+        document.getElementById("like-count").innerText = likeCount;
+    }
+
+    function submitComment() {
+        const commentInput = document.getElementById("comment-input");
+        const commentText = commentInput.value.trim();  // 공백 제거 후 확인
+        const postId = document.querySelector("#detail-title").getAttribute("data-post-id");
+    
+        console.log("댓글 내용:", commentText);  // 디버깅용
+    
+        if (!commentText) {
+            alert("댓글 내용을 입력하세요.");
+            return;  // 내용이 없으면 중단
+        }
+    
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    
+        fetch(`/submit_comment/${postId}/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-CSRFToken": csrfToken,
+            },
+            body: new URLSearchParams({ "content": commentText })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("댓글 등록 실패");
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.status === "success") {
+                const commentList = document.getElementById("comment-list");
+                const newComment = document.createElement("div");
+                newComment.classList.add("comment");
+                newComment.innerHTML = `
+                    <p><strong>${data.author}</strong>: ${data.content}</p>
+                    <span class="comment-date">${data.created_at}</span>
+                `;
+                commentList.appendChild(newComment);
+                commentInput.value = "";  // 댓글 입력 초기화
+            } else {
+                alert("댓글 등록에 실패했습니다: " + data.message);
+            }
+        })
+        .catch(error => {
+            console.error("Error submitting comment:", error);
+            alert("댓글 등록 중 오류가 발생했습니다.");
+        });
+    }
+    
+    
+
+    // CSRF 토큰 가져오기
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+            const cookies = document.cookie.split(";");
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + "=")) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    
+</script>
 </body>
 </html>

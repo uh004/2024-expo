@@ -18,15 +18,47 @@
     <!-- 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
-</head>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KRdisplay=swap" rel="stylesheet">
+
+    <script>
+      function savePost(event) {
+        event.preventDefault(); // 폼의 기본 제출 동작 방지
+    
+        // 입력된 제목과 내용 가져오기
+        const title = document.getElementById('title').value;
+        const content = document.getElementById('content').value;
+        const video = document.getElementById('video').files[0];
+    
+        // 파일을 Blob URL로 변환 (동영상이 있는 경우에만)
+        const videoUrl = video ? URL.createObjectURL(video) : null;
+    
+        // 새로운 게시물 객체 생성
+        const newPost = { title, content, videoUrl };
+    
+        // 기존 저장된 게시물 목록 불러오기 (없으면 빈 배열)
+        let posts = JSON.parse(localStorage.getItem('posts')) || [];
+        
+        // 새로운 게시물 추가
+        posts.push(newPost);
+        
+        // 로컬 저장소에 게시물 저장
+        localStorage.setItem('posts', JSON.stringify(posts));
+    
+        // 커뮤니티 페이지로 이동
+        window.location.href = 'community.html';
+      }
+    </script>
+
+  </head>
 <body>
   <div class="frame2">
     <!-- 상단 네비게이션 바 -->
     <nav class="header">
       <!-- 이미지 경로 수정 -->
-      <img src="{% static 'img/logo.png' %}" alt="로고">
-      <ul>
+        <a href="{% url 'comunity' %}">
+        <img src="{% static 'img/logo.png' %}" alt="로고">
+        </a>
+        <ul>
         <!-- URL 경로 수정 -->
         <li><a href="{% url 'main' %}" class="neon-effect">홈</a></li>
         <li><a href="{% url 'gamerule' %}" class="neon-effect">게임방법</a></li>
@@ -60,13 +92,6 @@
                     <label for="video">동영상 첨부:</label>
                     <input type="file" id="video" name="video" accept="video/*">
                 </div>
-
-                <!-- 사진 첨부 -->
-                <div class="form-group">
-                    <label for="image">사진 첨부:</label>
-                    <input type="file" id="image" name="image" accept="image/*">
-                </div>
-
                 <!-- 제출 버튼 -->
                 <div class="form-group">
                     <button type="submit">등록하기</button>

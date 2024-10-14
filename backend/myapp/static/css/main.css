@@ -1025,3 +1025,27 @@ button[type="button"] {
 button[type="button"]:hover {
   background-color: #0056b3;
 }
+/* 비디오 카드 스타일 */
+.video-card {
+  width: 480px;  /* 가로 크기 설정 */
+  height: 854px; /* 세로 크기 설정 */
+  margin: 20px auto; /* 중앙 정렬 */
+  background-color: #f9f9f9; /* 배경색 */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  border-radius: 10px; /* 모서리 둥글게 */
+  overflow: hidden; /* 콘텐츠가 넘치지 않도록 */
+}
+
+.video-frame {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-content {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 10px;
+}

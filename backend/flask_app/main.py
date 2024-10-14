@@ -1,4 +1,4 @@
-from flask import Flask, Response, render_template, send_file
+from flask import Flask, Response, render_template, send_file, session
 import cv2
 import mediapipe as mp
 import numpy as np
@@ -14,6 +14,7 @@ import matplotlib
 matplotlib.use('Agg')  # 백엔드를 'Agg'로 설정하여 GUI 경고 해결
 
 app = Flask(__name__)
+app.secret_key = '1234'  # Required to use sessions
 
 # MediaPipe 설정
 mp_pose_webcam = mp.solutions.pose  # 웹캠용 MediaPipe 포즈 추정 모델 설정
