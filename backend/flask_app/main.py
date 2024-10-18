@@ -131,58 +131,47 @@ def process_frame_async(frame, pose):
 
 import time
 
+# 비디오에서 FPS 값 가져오기
+def get_video_fps(video_file):
+    cap = cv2.VideoCapture(video_file)
+    if not cap.isOpened():
+        print("Error: Cannot open video file.")
+        return 30  # 기본 FPS 값 (비디오가 열리지 않으면 기본값으로 30 반환)
+    
+    fps = cap.get(cv2.CAP_PROP_FPS)  # FPS 값을 OpenCV에서 가져옴
+    cap.release()
+    return fps
+
+# 비디오 프레임 생성 및 처리 함수
 def generate_video_frames():
     cap2 = cv2.VideoCapture(video_file)
+    fps = get_video_fps(video_file)  # 비디오의 FPS 가져오기
+    delay = 1 / fps  # 각 프레임 사이의 딜레이를 FPS에 맞춰 설정
 
     if not cap2.isOpened():
         print("Error: Cannot open video file.")
         return
 
-    fps = cap2.get(cv2.CAP_PROP_FPS)  # FPS 가져오기
-    delay = 1 / fps  # FPS에 따른 지연 시간
-    first_frame = None
+    while cap2.isOpened():
+        start_time = time.time()
+        ret2, frame2 = cap2.read()
+        if not ret2:
+            break
 
-    with mp_pose_video.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose2:
-        while cap2.isOpened():
-            start_time = time.time()  # 프레임 처리 시작 시간 기록
+        # 프레임 크기 조정 (성능을 위해 해상도를 줄일 수 있음)
+        frame2 = cv2.resize(frame2, (640, 480))
 
-            ret2, frame2 = cap2.read()
-            if not ret2:
-                stop_event.set()  # 비디오가 끝나면 stop_event 설정
-                break
+        # 프레임을 인코딩하여 스트리밍
+        ret, buffer = cv2.imencode('.jpg', frame2)
+        frame = buffer.tobytes()
 
-            # 프레임 크기 조정
-            frame2 = cv2.resize(frame2, (frame_width, frame_height))
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
-            # MediaPipe 포즈 추정
-            frame2.flags.writeable = False
-            frame2_rgb = cv2.cvtColor(frame2, cv2.COLOR_BGR2RGB)
-            results2 = pose2.process(frame2_rgb)
-            frame2.flags.writeable = True
-
-            # 포즈 관절 그리기
-            if results2.pose_landmarks:
-                keypoints = extract_keypoints(results2.pose_landmarks.landmark, range(33))
-                keypoints_sequence2.append(l2_normalize(keypoints))
-
-            # 남은 시간을 프레임에 표시
-            current_frame = int(cap2.get(cv2.CAP_PROP_POS_FRAMES))
-            elapsed_time = current_frame / fps
-            remaining_time = max(0, (cap2.get(cv2.CAP_PROP_FRAME_COUNT) / fps) - elapsed_time)
-            cv2.putText(frame2, f'Time Left: {int(remaining_time)}s', (10, 40), 
-                        cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
-
-            ret, buffer = cv2.imencode('.jpg', frame2)
-            frame = buffer.tobytes()
-
-            yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
-
-            # 프레임 처리가 너무 빠를 경우, 일정 시간 대기하여 FPS를 맞춤
-            end_time = time.time()
-            processing_time = end_time - start_time
-            if processing_time < delay:
-                time.sleep(delay - processing_time)
+        # FPS에 맞춰 딜레이 추가
+        processing_time = time.time() - start_time
+        if processing_time < delay:
+            time.sleep(delay - processing_time)
 
     cap2.release()
 

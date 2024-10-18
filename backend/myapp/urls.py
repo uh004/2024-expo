@@ -30,4 +30,11 @@ urlpatterns = [
     path('challengecard3/', views.challengecard3, name='challengecard3'), # 챌린지 카드 3
     
     path('kpopcard1_start/', views.kpopcard1_start, name='kpopcard1_start'),
+
+    path('video_feed/', views.video_feed, name='video_feed'),  # 비디오 스트림 URL
+    path('webcam_feed/', views.webcam_feed, name='webcam_feed'),  # 웹캠 스트림 URL
+    path('graph/', views.graph, name='graph'),  # 유사도 비교 결과 페이지 URL
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
