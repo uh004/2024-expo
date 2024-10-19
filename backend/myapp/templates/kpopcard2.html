@@ -83,11 +83,11 @@
     });
 
     document.getElementById('startButton').addEventListener('click', function() {
-        window.location.href = "{% url 'kpopcard1_start' %}";  // 페이지 경로 수정
+        window.location.href = "{% url 'kpopcard2_start' %}";  // 페이지 경로 수정
     });
+
     function startGame(videoId) {
-      // videoId를 Flask 서버에 전달하여 비디오 및 오디오 재생
-      window.location.href = "/start_game/" + videoId;
+        window.location.href = "/start_game/" + videoId; // videoId를 URL로 전달
     }
   </script>
 </body>

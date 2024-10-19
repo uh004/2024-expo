@@ -30,6 +30,8 @@ urlpatterns = [
     path('challengecard3/', views.challengecard3, name='challengecard3'), # 챌린지 카드 3
     
     path('kpopcard1_start/', views.kpopcard1_start, name='kpopcard1_start'),
+    path('kpopcard2_start/', views.kpopcard2_start, name='kpopcard2_start'),
+    path('kpopcard3_start/', views.kpopcard3_start, name='kpopcard3_start'),
 
     path('video_feed/', views.video_feed, name='video_feed'),  # 비디오 스트림 URL
     path('webcam_feed/', views.webcam_feed, name='webcam_feed'),  # 웹캠 스트림 URL
