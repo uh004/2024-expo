@@ -85,6 +85,12 @@
         window.location.href = "{% url 'kpopcard1_start' %}";  // 페이지 경로 수정
     });
 
+
+    function getIdFromLink(id) {
+      console.log("ID: " + id)
+      window.location.href = "{% url 'kpopcard1_start' %}?id=" + id;
+    }
+
   </script>
 </body>
 </html>

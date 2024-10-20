@@ -804,7 +804,7 @@ tr:hover {
 
 /* 새 글 작성 */
 .new-post {
-  width: 52%;
+  width: 50%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -813,7 +813,7 @@ tr:hover {
   border: 1px solid #ccc;
   border-radius: 10px;
   /* margin: 20px auto; */
-  margin-left: 160px;
+  margin-left: 350px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   
 }
@@ -937,11 +937,6 @@ button:hover {
   background-color: #0056b3;
 }
 
-/* 하단 영역 추가 */
-.footer-space {
-  height: 200px; /* 하단에 200px 높이 추가 */
-}
-
 /* comunity */
 
 /* write */
@@ -1028,7 +1023,7 @@ button[type="button"]:hover {
 /* 비디오 카드 스타일 */
 .video-card {
   width: 480px;  /* 가로 크기 설정 */
-  height: 854px; /* 세로 크기 설정 */
+  height: 700px; /* 세로 크기 설정 */
   margin: 20px auto; /* 중앙 정렬 */
   background-color: #f9f9f9; /* 배경색 */
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 */

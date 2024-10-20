@@ -146,6 +146,15 @@ def shotscard2(request):
 def shotscard3(request):
   return render(request, 'shotscard3.html')
 
+def shotscard1_start(request):
+  return render(request, 'shotscard1_start.html')
+
+def shotscard2_start(request):
+  return render(request, 'shotscard2_start.html')
+
+def shotscard3_start(request):
+  return render(request, 'shotscard3_start.html')
+
 def challenge(request):
   return render(request, 'challenge.html')
 
@@ -157,6 +166,15 @@ def challengecard2(request):
 
 def challengecard3(request):
   return render(request, 'challengecard3.html')
+
+def challengecard1_start(request):
+  return render(request, 'challengecard1_start.html')
+
+def challengecard2_start(request):
+  return render(request, 'challengecard2_start.html')
+
+def challengecard3_start(request):
+  return render(request, 'challengecard3_start.html')
 
 
 # views.py
@@ -186,6 +204,9 @@ mp_pose_video = mp.solutions.pose
 mp_drawing = mp.solutions.drawing_utils
 
 # 비디오 파일 경로 설정
+# kpop1 kpop2 kpop3
+# shots1 shots2 shots3
+# challenge1 challenge2 challenge3
 video_file = os.path.join(settings.BASE_DIR, 'myapp', 'static', 'video', 'kpop1.mp4')
 
 
@@ -270,8 +291,17 @@ def cosine_similarity_weighted(v1, v2, weights):
     return dot_product / (norm_v1 * norm_v2)
 
 # 웹캠 프레임 생성 및 포즈 감지 (아이들이 좋아할 스타일 적용)
+import cv2
+import os
+import random
+import time
+from django.conf import settings
+from django.http import HttpResponse, Http404
+
+# 웹캠 프레임 생성 및 포즈 감지
 def generate_webcam_frames():
     cap1 = cv2.VideoCapture(0)  # 웹캠 초기화
+
     if not cap1.isOpened():
         print("Error: Cannot access webcam.")
         return
@@ -279,9 +309,36 @@ def generate_webcam_frames():
     global current_landmark_color, target_landmark_color
     global current_connection_color, target_connection_color
 
+    # 웹캠의 FPS 가져오기
+    fps = cap1.get(cv2.CAP_PROP_FPS)
+    if fps == 0:  # FPS 값을 가져오지 못할 경우 기본값 설정
+        fps = 30.0
+
+    # 2배 느리게 하기 위해 FPS를 절반으로 줄임
+    slow_fps = fps / 2.0
+    delay = 1 / slow_fps  # FPS에 따른 지연 시간 계산 (초 단위)
+
+    # 코덱 설정 (H.264 코덱 사용, 'mp4v' 또는 'avc1')
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    '''
+    cmd에서 backend 경로에서
+    커뮤니티 쿼리 삭제
+    1. python manage.py shell
+    2. from myapp.models import Post
+    3. Post.objects.all().delete()
+    '''
+
+    # 비디오 저장 경로 설정
+    output_path = os.path.join(settings.BASE_DIR, 'myapp', 'static', 'video', 'webcam_output.mp4')
+
+    # 비디오 파일 저장 (640x480 해상도, 절반 속도로 저장)
+    out = cv2.VideoWriter(output_path, fourcc, slow_fps, (640, 480))
+
     # MediaPipe 포즈 감지기 초기화
     with mp_pose_webcam.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose1:
         while cap1.isOpened() and not stop_event.is_set():
+            start_time = time.time()  # 각 프레임의 시작 시간 기록
+
             ret1, frame1 = cap1.read()  # 웹캠에서 프레임 읽기
             if not ret1:
                 break
@@ -296,6 +353,9 @@ def generate_webcam_frames():
             results1 = pose1.process(frame1_rgb)
             frame1.flags.writeable = True
 
+            # 웹캠 프레임을 비디오 파일에 저장 (느리게 저장)
+            out.write(frame1)
+
             # 색상 서서히 변화
             current_landmark_color = smooth_color_transition(current_landmark_color, target_landmark_color, color_change_speed)
             current_connection_color = smooth_color_transition(current_connection_color, target_connection_color, color_change_speed)
@@ -308,12 +368,11 @@ def generate_webcam_frames():
 
             # 포즈 랜드마크가 감지되면
             if results1.pose_landmarks:
-                # 랜드마크를 더 귀엽고 재미있게 그리기 (서서히 색상 변화 적용)
                 mp_drawing.draw_landmarks(
                     frame1, 
                     results1.pose_landmarks, 
                     mp_pose_webcam.POSE_CONNECTIONS,
-                    landmark_drawing_spec=mp_drawing.DrawingSpec(color=tuple(map(int, current_landmark_color)), thickness=4, circle_radius=6),
+                    landmark_drawing_spec=mp_drawing.DrawingSpec(color=tuple(map(int, current_landmark_color)), thickness=4, circle_radius=4),
                     connection_drawing_spec=mp_drawing.DrawingSpec(color=tuple(map(int, current_connection_color)), thickness=5)
                 )
                 
@@ -327,7 +386,28 @@ def generate_webcam_frames():
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
+            # 현재 프레임 처리 시간 계산
+            processing_time = time.time() - start_time
+            if processing_time < delay:
+                time.sleep(delay - processing_time)  # 필요한 만큼 지연 시간 추가
+
     cap1.release()
+    out.release()  # 비디오 파일 저장 완료
+
+# 비디오 다운로드 함수
+def download_webcam_video(request):
+    # 서버에 저장된 비디오 파일 경로 설정
+    video_path = os.path.join(settings.BASE_DIR, 'myapp', 'static', 'video', 'webcam_output.mp4')
+
+    if os.path.exists(video_path):
+        # 클라이언트에게 파일을 제공
+        with open(video_path, 'rb') as fh:
+            response = HttpResponse(fh.read(), content_type="video/x-msvideo")
+            response['Content-Disposition'] = 'attachment; filename=' + os.path.basename(video_path)
+            return response
+    else:
+        raise Http404("Video not found")
+
 
 # 비디오 프레임 생성 및 포즈 감지
 def generate_video_frames():
