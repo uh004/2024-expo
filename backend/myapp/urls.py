@@ -30,16 +30,16 @@ urlpatterns = [
     path('challengecard3/', views.challengecard3, name='challengecard3'), # 챌린지 카드 3
     
     path('kpopcard1_start/', views.kpopcard1_start, name='kpopcard1_start'),
-    path('kpopcard2_start/', views.kpopcard2_start, name='kpopcard2_start'),
-    path('kpopcard3_start/', views.kpopcard3_start, name='kpopcard3_start'),
+    # path('kpopcard2_start/', views.kpopcard2_start, name='kpopcard2_start'),
+    # path('kpopcard3_start/', views.kpopcard3_start, name='kpopcard3_start'),
 
     path('shotscard1_start/', views.shotscard1_start, name='shotscard1_start'),
-    path('shotscard2_start/', views.shotscard2_start, name='shotscard2_start'),
-    path('shotscard3_start/', views.shotscard3_start, name='shotscard3_start'),
+    # path('shotscard2_start/', views.shotscard2_start, name='shotscard2_start'),
+    # path('shotscard3_start/', views.shotscard3_start, name='shotscard3_start'),
 
     path('challengecard1_start/', views.challengecard1_start, name='challengecard1_start'),
-    path('challengecard2_start/', views.challengecard2_start, name='challengecard2_start'),
-    path('challengecard3_start/', views.challengecard3_start, name='challengecard3_start'),
+    # path('challengecard2_start/', views.challengecard2_start, name='challengecard2_start'),
+    # path('challengecard3_start/', views.challengecard3_start, name='challengecard3_start'),
 
     path('video_feed/', views.video_feed, name='video_feed'),  # 비디오 스트림 URL
     
@@ -47,6 +47,8 @@ urlpatterns = [
     path('download_webcam_video/', views.download_webcam_video, name='download_webcam_video'),  # 웹캠 비디오 다운로드 경로
     
     path('graph/', views.graph, name='graph'),  # 유사도 비교 결과 페이지 URL
+
+    path('get_rank_data/', views.get_rank_data, name='get_rank_data'),
 ]
 
 if settings.DEBUG:

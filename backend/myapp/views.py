@@ -9,8 +9,32 @@ from django.conf import settings
 import os
 from django.templatetags.static import static
 
+import os
+import cv2
+import mediapipe as mp
+import numpy as np
+import time
+from fastdtw import fastdtw
+from scipy.spatial.distance import euclidean
+from threading import Event
+from django.shortcuts import render
+from django.http import StreamingHttpResponse, HttpResponse
+import io
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+
+from django.views.decorators.cache import never_cache
+import random
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+import matplotlib.colors as mcolors
+from django.http import HttpResponse, Http404
+
+from .models import Player
+
+
 # Create your views here.
 
+video_file = os.path.join(settings.BASE_DIR, 'myapp', 'static', 'video', 'kpop1.mp4')
 
 def start(request):
   return render(request, 'start.html')
@@ -42,7 +66,18 @@ def gamerule(request):
   return render(request, 'gamerule.html')
 
 def rank(request):
-  return render(request, 'rank.html')
+  # Player 모델에서 점수가 있는 플레이어들을 높은 순서대로 정렬
+  players = Player.objects.all().order_by('-score')[:10]
+  return render(request, 'rank.html', {'players': players})
+
+# 추가
+def get_rank_data(request):
+    players = Player.objects.all().order_by('-score')[:10]
+    player_data = [
+        {'nickname': player.nickname, 'score': player.score}
+        for player in players
+    ]
+    return JsonResponse(player_data, safe=False)
 
 def comunity(request):
   posts = Post.objects.all() # 데이터베이스에서 모든 게시글 가져오기 ( Django 서버 측에서 데이터 가져오는곳임)
@@ -126,13 +161,19 @@ def kpopcard3(request):
   return render(request, 'kpopcard3.html')
 
 def kpopcard1_start(request):
-  return render(request, 'kpopcard1_start.html')
 
-def kpopcard2_start(request):
-  return render(request, 'kpopcard2_start.html')
+  global video_file
+  number = request.GET.get('id')
+  context = {'number' : number}
+  video_file = os.path.join(settings.BASE_DIR, 'myapp', 'static', 'video', f'{number}.mp4')
 
-def kpopcard3_start(request):
-  return render(request, 'kpopcard3_start.html')
+  return render(request, 'kpopcard1_start.html', context)
+
+# def kpopcard2_start(request):
+#   return render(request, 'kpopcard2_start.html')
+
+# def kpopcard3_start(request):
+#   return render(request, 'kpopcard3_start.html')
 
 def shots(request):
   return render(request, 'shots.html')
@@ -147,13 +188,19 @@ def shotscard3(request):
   return render(request, 'shotscard3.html')
 
 def shotscard1_start(request):
-  return render(request, 'shotscard1_start.html')
 
-def shotscard2_start(request):
-  return render(request, 'shotscard2_start.html')
+  global video_file
+  number = request.GET.get('id')
+  context = {'number' : number}
+  video_file = os.path.join(settings.BASE_DIR, 'myapp', 'static', 'video', f'{number}.mp4')
 
-def shotscard3_start(request):
-  return render(request, 'shotscard3_start.html')
+  return render(request, 'shotscard1_start.html', context)
+
+# def shotscard2_start(request):
+#   return render(request, 'shotscard2_start.html')
+
+# def shotscard3_start(request):
+#   return render(request, 'shotscard3_start.html')
 
 def challenge(request):
   return render(request, 'challenge.html')
@@ -168,35 +215,23 @@ def challengecard3(request):
   return render(request, 'challengecard3.html')
 
 def challengecard1_start(request):
-  return render(request, 'challengecard1_start.html')
 
-def challengecard2_start(request):
-  return render(request, 'challengecard2_start.html')
+  global video_file
+  number = request.GET.get('id')
+  context = {'number' : number}
+  video_file = os.path.join(settings.BASE_DIR, 'myapp', 'static', 'video', f'{number}.mp4')
 
-def challengecard3_start(request):
-  return render(request, 'challengecard3_start.html')
+  # return render(request, 'shotscard1_start.html', context)
+  return render(request, 'challengecard1_start.html', context)
+
+# def challengecard2_start(request):
+#   return render(request, 'challengecard2_start.html')
+
+# def challengecard3_start(request):
+#   return render(request, 'challengecard3_start.html')
 
 
 # views.py
-
-import os
-import cv2
-import mediapipe as mp
-import numpy as np
-import time
-from fastdtw import fastdtw
-from scipy.spatial.distance import euclidean
-from threading import Event
-from django.shortcuts import render
-from django.http import StreamingHttpResponse, HttpResponse
-import io
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-from django.conf import settings
-from django.views.decorators.cache import never_cache
-import random
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-import matplotlib.colors as mcolors
 
 # MediaPipe 설정
 mp_pose_webcam = mp.solutions.pose
@@ -207,7 +242,7 @@ mp_drawing = mp.solutions.drawing_utils
 # kpop1 kpop2 kpop3
 # shots1 shots2 shots3
 # challenge1 challenge2 challenge3
-video_file = os.path.join(settings.BASE_DIR, 'myapp', 'static', 'video', 'kpop1.mp4')
+# video_file = os.path.join(settings.BASE_DIR, 'myapp', 'static', 'video', 'kpop1.mp4')
 
 
 # 전역적으로 키포인트 저장을 위한 리스트
@@ -290,13 +325,7 @@ def cosine_similarity_weighted(v1, v2, weights):
     norm_v2 = np.linalg.norm(v2 * weights)
     return dot_product / (norm_v1 * norm_v2)
 
-# 웹캠 프레임 생성 및 포즈 감지 (아이들이 좋아할 스타일 적용)
-import cv2
-import os
-import random
-import time
-from django.conf import settings
-from django.http import HttpResponse, Http404
+
 
 # 웹캠 프레임 생성 및 포즈 감지
 def generate_webcam_frames():
@@ -536,6 +565,18 @@ def graph(request):
 
     # 평균 유사도 계산
     average_similarity = np.mean(similarity_list) if similarity_list else 0
+
+    # 새롭게 추가 되는 코드 (사용자의 니게임 가져오기)
+    nickname = request.session.get('nickname', None)  # 세션 또는 POST 요청에서 닉네임 가져오기
+    if nickname:
+        try:
+            # Player 모델에서 닉네임에 해당하는 플레이어 인스턴스 가져오기
+            player = Player.objects.get(nickname=nickname)
+            # 평균 점수 저장
+            player.score = average_similarity
+            player.save()
+        except Player.DoesNotExist:
+            return HttpResponse("Player does not exist.")
 
     # 비디오의 FPS를 가져옴
     fps = get_video_fps(video_file)

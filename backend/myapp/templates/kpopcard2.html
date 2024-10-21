@@ -28,7 +28,7 @@
     </nav>
 
     <!-- <button id="startButton">챌린지 시작하기</button> -->
-    <button id="startButton" onclick="startGame(2)">챌린지 시작하기</button>
+    <button id="startButton2" onclick="getIdFromLink(this.id)" class="startButton">챌린지 시작하기</button>
 
     <div class="kpop-card1">
       <div class="video-card">
@@ -82,13 +82,13 @@
       }
     });
 
-    document.getElementById('startButton').addEventListener('click', function() {
-        window.location.href = "{% url 'kpopcard2_start' %}";  // 페이지 경로 수정
-    });
 
-    function startGame(videoId) {
-        window.location.href = "/start_game/" + videoId; // videoId를 URL로 전달
+    function getIdFromLink(id) {
+      var id2 = "kpop" + String(id.replace(/\D/g,""))
+      console.log("ID: " + id2)
+      window.location.href = "{% url 'kpopcard1_start' %}?id=" + id2;
     }
+
   </script>
 </body>
 </html>

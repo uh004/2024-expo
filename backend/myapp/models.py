@@ -17,10 +17,12 @@ class Player(models.Model):
     
     nickname = models.CharField(max_length=100, primary_key=True)  # 닉네임을 primary_key로 설정
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='M')  # 성별 필드 추가, 기본값 M
-
-
+    score  = models.FloatField(null=True, blank=True) # 평균 점수 필드 추가
+    
     def __str__(self):
         return f"닉네임: {self.nickname}, 성별: {self.get_gender_display()}"
+    
+    
 class Post(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
