@@ -20,3 +20,24 @@
 | **인공지능**     | ![Mediapipe](https://img.shields.io/badge/-Mediapipe-00C853?logo=google&logoColor=white) ![OpenCV](https://img.shields.io/badge/-OpenCV-5C3EE8?logo=opencv&logoColor=white) ![FastDTW](https://img.shields.io/badge/-FastDTW-4CAF50?logo=fastdtw&logoColor=white) |
 | **데이터 시각화**| ![Matplotlib](https://img.shields.io/badge/-Matplotlib-013243?logo=python&logoColor=white) |
 | **협업 도구**    | ![GitHub](https://img.shields.io/badge/-GitHub-181717?logo=github&logoColor=white) ![Notion](https://img.shields.io/badge/-Notion-000000?logo=notion&logoColor=white) |
+
+## 📸 화면 예시
+
+| **시작 화면**          | **메인 화면**           | **랭킹 화면**         |
+|------------------------|-------------------------|-------------------------|
+| ![시작 화면](https://github.com/user-attachments/assets/4da81596-3051-4e25-b2e1-96cda5cf5588) | ![메인 화면](https://github.com/user-attachments/assets/87361c0b-8650-4637-9473-c04776c80975) | ![랭킹 화면](https://github.com/user-attachments/assets/1a35e54d-54bf-4a2d-b25c-56d1aafe02c5) |
+
+| **카테고리 화면**       | **곡 선택 화면**       | **곡 디테일 화면**     |
+|------------------------|-------------------------|-------------------------|
+| ![카테고리 화면](https://github.com/user-attachments/assets/1c859b05-cb4f-4e6f-9c40-afdf2b1b4274) | ![곡 선택 화면](https://github.com/user-attachments/assets/fd8145e2-e5f0-46fe-b6df-b3c70f97807f) | ![곡 디테일 화면](https://github.com/user-attachments/assets/3cc17ef3-51e0-4cb7-976f-657a398cb7e0) |
+
+| **실행 화면**          | **그래프 화면**        |
+|------------------------|------------------------|
+| ![실행 화면](https://github.com/user-attachments/assets/c32b7644-5eaf-4d8e-a623-ea42c920b975) | ![그래프 화면](https://github.com/user-attachments/assets/8f7332fe-cdae-49fe-810e-19d46c5c3f4a) |
+
+| **위치 안내**          | **부스 사진**           | **시상식 사진**         |
+|------------------------|-------------------------|-------------------------|
+| ![위치 안내](https://github.com/user-attachments/assets/3a168614-fdeb-46f3-b46b-141c578d793b) | ![부스 사진](https://github.com/user-attachments/assets/0e221f32-d692-4c55-82f8-f546d2ba91ae) | ![시상식 사진](https://github.com/user-attachments/assets/941b4dc4-6564-4b6f-8532-a5329552f1c6) |
+
+
+
